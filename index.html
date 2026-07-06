@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Парк Совіньйон · Маркетинг</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+:root{--olive:#999F4F;--olive-d:#7d8337;--yellow:#F0CF4B;--navy:#313746;--gray:#767C8D;--cream:#F7F5F2;--white:#fff;--line:rgba(49,55,70,.08);--shadow:0 10px 30px rgba(49,55,70,.08);--r:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'ProbaPro',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--cream);color:var(--navy);-webkit-font-smoothing:antialiased;line-height:1.4}
+.hdr{position:sticky;top:0;z-index:20;background:rgba(247,245,242,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+.dot{width:26px;height:26px;border-radius:50%;background:var(--olive);position:relative;flex:0 0 auto}.dot::after{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--yellow)}
+.brand small{display:block;font-weight:500;color:var(--gray);font-size:11px}
+.msel{position:relative}select{appearance:none;-webkit-appearance:none;background:var(--navy);color:#fff;border:0;border-radius:999px;padding:10px 38px 10px 16px;font:inherit;font-weight:600;font-size:14px;cursor:pointer}
+.msel::after{content:"▾";position:absolute;right:15px;top:50%;transform:translateY(-50%);color:var(--yellow);pointer-events:none}
+main{max-width:1180px;margin:0 auto;padding:16px 16px 60px}
+.sect-t{font-size:13px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--gray);margin:26px 4px 12px}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:560px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.grid.k3{grid-template-columns:repeat(3,1fr)}.grid.k4{grid-template-columns:repeat(4,1fr)}}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+.kpi .lab{font-size:13px;color:var(--gray);font-weight:600}.kpi .val{font-size:28px;font-weight:800;letter-spacing:-.5px;margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.kpi .val small{font-size:13px;font-weight:600;color:var(--gray)}.kpi .sub{font-size:12px;color:var(--gray);margin-top:6px}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;margin-top:8px}
+.up{background:rgba(153,159,79,.14);color:var(--olive-d)}.down{background:rgba(224,76,96,.12);color:#c0392b}.flat{background:rgba(118,124,141,.12);color:var(--gray)}
+.acc{border-left:4px solid var(--yellow)}.accg{border-left:4px solid var(--olive)}
+.chart-card{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.chart-card h3{font-size:14px;font-weight:700;margin-bottom:10px}
+.cwrap{position:relative;height:210px}
+.cap{margin-top:10px;font-size:12.5px;color:var(--gray);line-height:1.5;border-top:1px solid var(--line);padding-top:9px}
+.cap b{color:var(--navy)}
+.pending .card{opacity:.65;border-style:dashed}
+.tag{display:inline-block;font-size:10px;font-weight:700;color:var(--olive-d);background:rgba(240,207,75,.25);padding:2px 8px;border-radius:999px;margin-left:6px}
+.ft{margin-top:30px;text-align:center;color:var(--gray);font-size:12px;line-height:1.6}
+</style></head><body>
+<div class="hdr"><div class="brand"><span class="dot"></span><div>Парк Совіньйон<small>Маркетинг-дашборд</small></div></div><div class="msel"><select id="month"></select></div></div>
+<main>
+<div class="sect-t">Реклама · <span class="lm"></span></div><div class="grid k3" id="kAds"></div>
+<div class="sect-t">Результат (CRM) · <span class="lm"></span></div><div class="grid k4" id="kRes"></div>
+<div class="sect-t">Динаміка по місяцях</div>
+<div class="grid">
+<div class="chart-card"><h3>Ліди Meta</h3><div class="cwrap"><canvas id="cLeads"></canvas></div><div class="cap" id="capLeads"></div></div>
+<div class="chart-card"><h3>CPL Meta, грн</h3><div class="cwrap"><canvas id="cCpl"></canvas></div><div class="cap" id="capCpl"></div></div>
+<div class="chart-card"><h3>Якісні цільові ліди</h3><div class="cwrap"><canvas id="cQual"></canvas></div><div class="cap" id="capQual"></div></div>
+<div class="chart-card"><h3>Угоди-квартири</h3><div class="cwrap"><canvas id="cDeal"></canvas></div><div class="cap" id="capDeal"></div></div>
+</div>
+<div class="sect-t">Розбір місяця · <span class="lm"></span></div>
+<div class="grid">
+<div class="chart-card"><h3>Воронка лідів</h3><div class="cwrap"><canvas id="cFun"></canvas></div><div class="cap" id="capFun"></div></div>
+<div class="chart-card"><h3>Причини відмов</h3><div class="cwrap"><canvas id="cRej"></canvas></div><div class="cap" id="capRej"></div></div>
+<div class="chart-card"><h3>Джерела лідів</h3><div class="cwrap"><canvas id="cSrc"></canvas></div><div class="cap" id="capSrc"></div></div>
+<div class="chart-card"><h3>Ліди Meta за аудиторіями</h3><div class="cwrap"><canvas id="cAud"></canvas></div><div class="cap" id="capAud"></div></div>
+</div>
+<div class="ft" id="ft"></div></main>
+<script>
+Chart.register(ChartDataLabels);
+const DATA={"months": ["2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"], "labels": {"2025-11": "Листопад 2025", "2025-12": "Грудень 2025", "2026-01": "Січень 2026", "2026-02": "Лютий 2026", "2026-03": "Березень 2026", "2026-04": "Квітень 2026", "2026-05": "Травень 2026", "2026-06": "Червень 2026"}, "meta": {"2025-11": {"spend": 42413, "leads": 118, "cpl": 289}, "2025-12": {"spend": 52957, "leads": 113, "cpl": 352}, "2026-01": {"spend": 55277, "leads": 110, "cpl": 376}, "2026-02": {"spend": 57091, "leads": 140, "cpl": 318}, "2026-03": {"spend": 62739, "leads": 139, "cpl": 411}, "2026-04": {"spend": 64378, "leads": 139, "cpl": 409}, "2026-05": {"spend": 74704, "leads": 142, "cpl": 441}, "2026-06": {"spend": 55314, "leads": 109, "cpl": 478}}, "metaCamp": {"2025-11": [{"name": "Premium", "leads": 73}, {"name": "єОселя", "leads": 17}, {"name": "Lookalike", "leads": 10}, {"name": "Moldova", "leads": 9}, {"name": "Іпотека", "leads": 9}], "2025-12": [{"name": "Premium", "leads": 50}, {"name": "єОселя", "leads": 28}, {"name": "Іпотека", "leads": 21}, {"name": "Moldova", "leads": 14}], "2026-01": [{"name": "Premium", "leads": 59}, {"name": "Іпотека", "leads": 20}, {"name": "єОселя", "leads": 15}, {"name": "Lookalike", "leads": 8}, {"name": "Moldova", "leads": 8}], "2026-02": [{"name": "Premium", "leads": 66}, {"name": "єОселя", "leads": 30}, {"name": "Lookalike", "leads": 24}, {"name": "Іпотека", "leads": 20}], "2026-03": [{"name": "Premium", "leads": 46}, {"name": "Family", "leads": 29}, {"name": "Lookalike", "leads": 23}, {"name": "єОселя", "leads": 21}, {"name": "Іпотека", "leads": 20}], "2026-04": [{"name": "Premium", "leads": 56}, {"name": "Family", "leads": 24}, {"name": "Іпотека", "leads": 22}, {"name": "єОселя", "leads": 19}, {"name": "Non-Targeted", "leads": 18}], "2026-05": [{"name": "Non-Targeted", "leads": 60}, {"name": "Premium", "leads": 49}, {"name": "PS_Leads заг.", "leads": 18}, {"name": "Іпотека", "leads": 8}, {"name": "єОселя", "leads": 6}, {"name": "Family", "leads": 1}], "2026-06": [{"name": "PS_Leads заг.", "leads": 62}, {"name": "Premium", "leads": 31}, {"name": "Non-Targeted", "leads": 16}]}, "crm": {"2025-11": {"total": 177, "green": 29, "peach": 46, "conv1": 42, "conv2": 16.4, "visits": 9, "src": {"Meta": 118, "Інше": 26, "Форма сайту": 12, "Дзвінок": 11, "Візит": 9, "Ріелтор": 1}, "rej": {"Локація": 8, "Ціна": 26, "Інше місто": 8, "Відкладена": 4, "Площа": 2, "Інший проєкт": 3}, "funnel": {"Всього": 177, "Дзвінок": 129, "Цільові": 75, "Якісні": 29, "Угоди": 1}}, "2025-12": {"total": 151, "green": 30, "peach": 38, "conv1": 45, "conv2": 19.9, "visits": 2, "src": {"Meta": 113, "Дзвінок": 11, "Візит": 2, "Інше": 18, "Форма сайту": 5, "Ріелтор": 2}, "rej": {"Ціна": 9, "Локація": 5, "Площа": 2, "Відкладена": 9, "Інше місто": 13, "Чекає будинок": 1}, "funnel": {"Всього": 151, "Дзвінок": 114, "Цільові": 68, "Якісні": 30, "Угоди": 1}}, "2026-01": {"total": 145, "green": 30, "peach": 40, "conv1": 48, "conv2": 20.7, "visits": 4, "src": {"Інше": 17, "Meta": 108, "Форма сайту": 6, "Дзвінок": 9, "Ріелтор": 1, "Візит": 4}, "rej": {"Локація": 9, "Інше місто": 14, "Ціна": 9, "Відкладена": 7}, "funnel": {"Всього": 145, "Цільові": 70, "Дзвінок": 99, "Якісні": 30}}, "2026-02": {"total": 170, "green": 26, "peach": 56, "conv1": 48, "conv2": 15.3, "visits": 2, "src": {"Meta": 142, "Інше": 20, "Дзвінок": 3, "Візит": 2, "Ріелтор": 1, "Форма сайту": 2}, "rej": {"Ціна": 16, "Інше місто": 14, "Локація": 8, "Площа": 3, "Відкладена": 7}, "funnel": {"Всього": 170, "Дзвінок": 115, "Цільові": 82, "Якісні": 26}}, "2026-03": {"total": 208, "green": 42, "peach": 76, "conv1": 57, "conv2": 20.2, "visits": 9, "src": {"Meta": 139, "Інше": 30, "Візит": 9, "Дзвінок": 18, "Форма сайту": 12}, "rej": {"Ціна": 24, "Локація": 11, "Площа": 6, "Інше місто": 2, "Відкладена": 5}, "funnel": {"Всього": 208, "Цільові": 118, "Дзвінок": 153, "Якісні": 42, "Угоди": 3}}, "2026-04": {"total": 193, "green": 39, "peach": 58, "conv1": 50, "conv2": 20.2, "visits": 6, "src": {"Meta": 138, "Форма сайту": 15, "Візит": 6, "Інше": 16, "Дзвінок": 15, "Ріелтор": 3}, "rej": {"Ціна": 21, "Відкладена": 4, "Локація": 2, "Площа": 1, "Інше місто": 1, "Інший проєкт": 2}, "funnel": {"Всього": 193, "Цільові": 97, "Дзвінок": 134, "Якісні": 39}}, "2026-05": {"total": 205, "green": 24, "peach": 69, "conv1": 45, "conv2": 11.7, "visits": 6, "src": {"Meta": 144, "Форма сайту": 17, "Інше": 27, "Дзвінок": 5, "Ріелтор": 5, "Візит": 6, "OLX": 1}, "rej": {"Інше місто": 2, "Ціна": 26, "Площа": 4, "Локація": 8, "Відкладена": 2}, "funnel": {"Всього": 205, "Дзвінок": 120, "Цільові": 93, "Якісні": 24, "Угоди": 2}}, "2026-06": {"total": 149, "green": 31, "peach": 48, "conv1": 53, "conv2": 20.8, "visits": 2, "src": {"Meta": 109, "Форма сайту": 5, "Ріелтор": 1, "Інше": 26, "Дзвінок": 6, "Візит": 2}, "rej": {"Локація": 3, "Ціна": 8, "Відкладена": 1, "Площа": 5, "Інший проєкт": 1}, "funnel": {"Всього": 149, "Дзвінок": 96, "Цільові": 79, "Якісні": 31, "Угоди": 1}}}, "google": {"2025-11": {"spend": 39021, "clicks": 46625, "cpc": 0.84}, "2025-12": {"spend": 48391, "clicks": 62948, "cpc": 0.77}, "2026-01": {"spend": 34475, "clicks": 61776, "cpc": 0.56}, "2026-02": {"spend": 41488, "clicks": 47444, "cpc": 0.87}, "2026-03": {"spend": 50581, "clicks": 38240, "cpc": 1.32}, "2026-04": {"spend": 43091, "clicks": 40524, "cpc": 1.06}, "2026-05": {"spend": 49118, "clicks": 71315, "cpc": 0.69}, "2026-06": {"spend": 36418, "clicks": 51281, "cpc": 0.71}}, "deals": {"2025-11": {"apt": 2, "rev": 161079}, "2025-12": {"apt": 1, "rev": 67800}, "2026-01": {"apt": 0, "rev": 0}, "2026-02": {"apt": 0, "rev": 0}, "2026-03": {"apt": 1, "rev": 93060}, "2026-04": {"apt": 1, "rev": 72320}, "2026-05": {"apt": 0, "rev": 0}, "2026-06": {"apt": 4, "rev": 282848}}, "generated": "05.07.2026 22:40"};const N=new Intl.NumberFormat('uk-UA');let ch={};
+const PAL=['#999F4F','#b0563a','#313746','#F0CF4B','#767C8D','#7d8337','#c9a227'];
+function dl(c,p,g){if(p==null||!p)return{t:'—',c:'flat'};const d=(c-p)/p*100,u=d>=0,ok=g?u:!u;return{t:(u?'▲':'▼')+' '+Math.abs(d).toFixed(1)+'%',c:Math.abs(d)<.05?'flat':(ok?'up':'down')};}
+function pv(m){const i=DATA.months.indexOf(m);return i>0?DATA.months[i-1]:null;}
+function kc(el,cards){document.getElementById(el).innerHTML=cards.map(c=>`<div class="card kpi ${c.cl||''}"><div class="lab">${c.lab}</div><div class="val">${c.val} <small>${c.u||''}</small></div>${c.d?`<span class="pill ${c.d.c}">${c.d.t}</span>`:''}<div class="sub">${c.sub||''}</div></div>`).join('');}
+function opt(horiz,labfmt,labcol){return{responsive:true,maintainAspectRatio:false,indexAxis:horiz?'y':'x',layout:{padding:horiz?{right:26}:{top:18}},plugins:{legend:{display:false},datalabels:{color:labcol||'#313746',font:{size:10,weight:'700'},anchor:horiz?'end':'end',align:horiz?'right':'top',formatter:labfmt||(v=>N.format(v))}},scales:{x:{grid:{display:false},ticks:{color:'#767C8D',font:{size:10}}},y:{grid:{color:'rgba(49,55,70,.06)'},ticks:{color:'#767C8D',font:{size:10}}}}};}
+function bar(id,vals,labs,color,sel,horiz){if(ch[id])ch[id].destroy();const bg=sel?DATA.months.map(m=>m===sel?'#F0CF4B':color):color;ch[id]=new Chart(document.getElementById(id),{type:'bar',data:{labels:labs,datasets:[{data:vals,backgroundColor:bg,borderRadius:6,maxBarThickness:horiz?20:34}]},options:opt(horiz)});}
+function pie(id,obj){if(ch[id])ch[id].destroy();const e=Object.entries(obj).sort((a,b)=>b[1]-a[1]);const tot=e.reduce((s,x)=>s+x[1],0);
+ ch[id]=new Chart(document.getElementById(id),{type:'doughnut',data:{labels:e.map(x=>x[0]),datasets:[{data:e.map(x=>x[1]),backgroundColor:PAL,borderWidth:2,borderColor:'#fff'}]},
+ options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'right',labels:{color:'#313746',font:{size:11},boxWidth:12,padding:8}},datalabels:{color:'#fff',font:{size:11,weight:'700'},formatter:(v)=>tot?Math.round(v/tot*100)+'%':''}}}});}
+function render(m){
+ const s=DATA.meta[m],g=DATA.google[m],c=DATA.crm[m],d=DATA.deals[m],pm=pv(m);
+ const ps=pm&&DATA.meta[pm],pg=pm&&DATA.google[pm],pc=pm&&DATA.crm[pm],pd=pm&&DATA.deals[pm];
+ kc('kAds',[
+  {lab:'Бюджет Meta',val:N.format(s.spend),u:'грн',d:dl(s.spend,ps&&ps.spend,true),sub:pm?'Було: '+N.format(ps.spend):''},
+  {lab:'Ліди Meta',val:N.format(s.leads),d:dl(s.leads,ps&&ps.leads,true),sub:'CPL '+N.format(s.cpl)+' грн'},
+  {lab:'Бюджет Google',val:N.format(g.spend),u:'грн',d:dl(g.spend,pg&&pg.spend,true),sub:'CPC '+g.cpc+' грн · '+N.format(g.clicks)+' кліків'}
+ ]);
+ kc('kRes',[
+  {lab:'Всього лідів',val:N.format(c.total),d:dl(c.total,pc&&pc.total,true),sub:'усі канали'},
+  {lab:'Якісні цільові',val:N.format(c.green),cl:'accg',d:dl(c.green,pc&&pc.green,true),sub:'Conv2: '+c.conv2+'% · Conv1: '+c.conv1+'%'},
+  {lab:'Угоди (квартири)',val:N.format(d.apt),cl:'acc',d:dl(d.apt,pd&&pd.apt,true),sub:'джерело: CRM /deals'},
+  {lab:'Дохід',val:'$'+N.format(d.rev),d:dl(d.rev,pd&&pd.rev,true),sub:'сума угод місяця'}
+ ]);
+ document.querySelectorAll('.lm').forEach(e=>e.textContent=DATA.labels[m]);
+ const L=DATA.months.map(x=>DATA.labels[x].split(' ')[0].slice(0,3));
+ bar('cLeads',DATA.months.map(x=>DATA.meta[x].leads),L,'#313746',m);
+ bar('cCpl',DATA.months.map(x=>DATA.meta[x].cpl),L,'#b0563a',m);
+ bar('cQual',DATA.months.map(x=>DATA.crm[x].green),L,'#999F4F',m);
+ bar('cDeal',DATA.months.map(x=>DATA.deals[x].apt),L,'#7d8337',m);
+ const fv=[c.funnel['Всього']||0,c.funnel['Дзвінок']||0,c.funnel['Цільові']||0,c.funnel['Якісні']||0,d.apt];bar('cFun',fv,['Всього','Дзвінок','Цільові','Якісні','Угоди'],'#313746',null,true);
+ pie('cRej',c.rej);
+ const sr=Object.entries(c.src).sort((a,b)=>b[1]-a[1]);bar('cSrc',sr.map(x=>x[1]),sr.map(x=>x[0]),'#999F4F',null,true);
+ const au=(DATA.metaCamp[m]||[]).slice(0,6);bar('cAud',au.map(x=>x.leads),au.map(x=>x.name),'#7d8337',null,true);
+ // тексти
+ const cpld=dl(s.cpl,ps&&ps.cpl,false);
+ cap('capLeads',`<b>${N.format(s.leads)}</b> лідів Meta у ${DATA.labels[m]}${pm?', '+(s.leads>=ps.leads?'зростання':'спад')+' до попереднього':''}.`);
+ cap('capCpl',`CPL <b>${N.format(s.cpl)} грн</b>${pm?' ('+cpld.t+' vs попередній)':''}. Ціль ПС: <450 грн.`);
+ cap('capQual',`Якісних цільових: <b>${c.green}</b> (Conv2 ${c.conv2}%). Бенчмарк ринку 5–13%.`);
+ cap('capDeal',`Угод-квартир: <b>${d.apt}</b>, дохід <b>$${N.format(d.rev)}</b>. Джерело — CRM /deals (клієнти).`);
+ cap('capFun',`З <b>${c.funnel['Всього']||0}</b> лідів до якісних цільових дійшло <b>${c.funnel['Якісні']||0}</b>, до угод — <b>${d.apt}</b>.`);
+ const re=Object.entries(c.rej).sort((a,b)=>b[1]-a[1]);cap('capRej',re.length?`Головна причина відмов — <b>${re[0][0]}</b> (${re[0][1]}). Всього причин: ${re.reduce((s,x)=>s+x[1],0)}.`:'Немає даних.');
+ cap('capSrc',sr.length?`Найбільше лідів з <b>${sr[0][0]}</b> (${sr[0][1]}). Всього джерел: ${sr.length}.`:'');
+ cap('capAud',au.length?`Топ-аудиторія Meta — <b>${au[0].name}</b> (${au[0].leads} лідів).`:'');
+}
+function cap(id,html){document.getElementById(id).innerHTML=html;}
+const sel=document.getElementById('month');
+DATA.months.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=DATA.labels[m];sel.appendChild(o);});
+sel.value=DATA.months[DATA.months.length-1];sel.onchange=()=>render(sel.value);
+document.getElementById('ft').innerHTML='Оновлено: '+DATA.generated+' · Meta + Google Ads + G-Plus CRM · <b>дані з таблиці проекту</b>';
+render(sel.value);
+</script></body></html>
