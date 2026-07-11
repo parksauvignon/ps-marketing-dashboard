@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Ціни конкурентів · Парк Совіньйон</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 @font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
@@ -72,6 +73,7 @@ table.sum td:first-child{white-space:normal;font-weight:600;font-size:12px}
 @media(max-width:640px){#map{height:320px}}
 .zlab{background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:var(--shadow);padding:5px 9px;font-family:'Proba Pro',system-ui,sans-serif;font-size:11.5px;font-weight:600;color:var(--navy);white-space:nowrap}
 .zlab b{display:block;font-size:12.5px}
+.zdot{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:baseline}
 .zlab.ps{background:var(--navy);color:#fff;border-color:var(--navy)} .zlab.ps b{color:var(--yellow)}
 .leaflet-tooltip-top:before,.leaflet-tooltip-bottom:before{display:none}
 .ft{margin-top:30px;text-align:center;color:var(--gray);font-size:11.5px;white-space:normal}
@@ -584,8 +586,8 @@ table.sum td:first-child{white-space:normal;font-weight:600;font-size:12px}
 <div class="ft">Знімок цін: Травень 2026 · Презентація «Ціни конкурентів ПС (травень 2026)»: lun.ua; СТИКОН — сайт забудовника; ARTVILLE/KEKS — zezman.ua. Сьоме Небо розпродане — виключене з моніторингу.</div>
 </div>
 
-<div class="band"><span class="ic">🗺</span>Карта гео-зон <small>медіана $/м² по зоні за обраний місяць · зони приблизні (оглядово)</small></div>
-<div class="an-card map-card"><div id="map"></div><div class="note" style="margin-top:8px">Кружки — умовні центри гео-зон моніторингу з медіаною $/м² (усі типи і стадії; KADORR поза розрахунком, KEKS/70 Перлина за нижньою межею). Точних координат кожного ЖК у моніторингу немає — тому зони, а не точки.</div></div>
+<div class="band"><span class="ic">🗺</span>Карта конкурентів <small>точки ЖК (координати з ЛУН) кольором гео-зони · медіана зони за обраний місяць</small></div>
+<div class="an-card map-card"><div id="map"></div><div class="note" style="margin-top:8px">Точка = ЖК (наведіть — назва і ціна «від» за обраний місяць); колір = гео-зона, підпис зони — медіана $/м² (усі типи і стадії; KADORR поза розрахунком, KEKS/70 Перлина за нижньою межею). Eco City — координата приблизна (знятий з ЛУН).</div></div>
 <div class="band"><span class="ic">📈</span>Динаміка та умови <small>всі місяці моніторингу · станом на липень 2026</small></div>
 <div class="an2">
  <div class="an-card"><div class="an-t">Медіана $/м² — готові доми <small>по місяцях, за типами</small></div><div class="chw"><canvas id="chDone"></canvas></div></div>
@@ -593,49 +595,58 @@ table.sum td:first-child{white-space:normal;font-weight:600;font-size:12px}
 </div>
 <div class="an2">
  <div class="an-card"><div class="an-t">Строк розстрочки <small>проєктів у категорії · липень 2026</small></div>
-<div class="donut-w"><div class="chw dn"><canvas id="chInst"></canvas></div><div class="cats"><div class="cat"><i style="background:#D6D9AC"></i><b>До 1,5 року</b> <span class="cnt">3</span><div class="cat-p">Посейдон, Акрополь, Удобний</div></div><div class="cat"><i style="background:#999F4F"></i><b>2–3 роки</b> <span class="cnt">8</span><div class="cat-p">Прохоровський квартал, ЖК Модерн, Таїровські сади, Сади Рів'єри, Акварель-3, Акварель-7, Derby Style House, Простір Eco City</div></div><div class="cat"><i style="background:#5F652F"></i><b>~4 роки і більше</b> <span class="cnt">10</span><div class="cat-p"><b>ПС — 4 роки без подорожчання</b>, RealPark (+NOVA), Аквамарин, Еллада 6, Акварель-10, KADORR City, 70 Перлина, ARTVILLE, KEKS, ODESA CITY</div></div><div class="cat"><i style="background:#B9BFC9"></i><b>Індивід. / не вказано</b> <span class="cnt">4</span><div class="cat-p">AVINION, Атмосфера, RUE MÉNARS, Одеські традиції</div></div></div></div></div>
+<div class="donut-w"><div class="chw dn"><canvas id="chInst"></canvas></div><div class="cats"><div class="cat"><i style="background:#e8897d"></i><b>До 1,5 року</b> <span class="cnt">3</span><div class="cat-p">Посейдон, Акрополь, Удобний</div></div><div class="cat"><i style="background:#f2cf6b"></i><b>2–3 роки</b> <span class="cnt">8</span><div class="cat-p">Прохоровський квартал, ЖК Модерн, Таїровські сади, Сади Рів'єри, Акварель-3, Акварель-7, Derby Style House, Простір Eco City</div></div><div class="cat"><i style="background:#8cc79c"></i><b>~4 роки і більше</b> <span class="cnt">10</span><div class="cat-p"><b>ПС — 4 роки без подорожчання</b>, RealPark (+NOVA), Аквамарин, Еллада 6, Акварель-10, KADORR City, 70 Перлина, ARTVILLE, KEKS, ODESA CITY</div></div><div class="cat"><i style="background:#c9ced8"></i><b>Індивід. / не вказано</b> <span class="cnt">4</span><div class="cat-p">AVINION, Атмосфера, RUE MÉNARS, Одеські традиції</div></div></div></div></div>
  <div class="an-card"><div class="an-t">Перший внесок <small>проєктів у категорії · липень 2026</small></div>
-<div class="donut-w"><div class="chw dn"><canvas id="chDown"></canvas></div><div class="cats"><div class="cat"><i style="background:#D6D9AC"></i><b>До 10%</b> <span class="cnt">2</span><div class="cat-p">70 Перлина, ODESA CITY</div></div><div class="cat"><i style="background:#999F4F"></i><b>15–25%</b> <span class="cnt">11</span><div class="cat-p"><b>ПС — від 20%</b>, Аквамарин, Таїровські сади, Сади Рів'єри, Акварель-3, Акварель-7, Акварель-10, KADORR City, KEKS, Derby Style House, Простір Eco City</div></div><div class="cat"><i style="background:#5F652F"></i><b>Від 30%</b> <span class="cnt">6</span><div class="cat-p">Прохоровський квартал, ЖК Модерн, Посейдон, Еллада 6, ARTVILLE, Удобний</div></div><div class="cat"><i style="background:#B9BFC9"></i><b>Не вказано</b> <span class="cnt">6</span><div class="cat-p">RealPark (+NOVA), Акрополь, AVINION, Атмосфера, RUE MÉNARS, Одеські традиції</div></div></div></div></div>
+<div class="donut-w"><div class="chw dn"><canvas id="chDown"></canvas></div><div class="cats"><div class="cat"><i style="background:#8cc79c"></i><b>До 10%</b> <span class="cnt">2</span><div class="cat-p">70 Перлина, ODESA CITY</div></div><div class="cat"><i style="background:#f2cf6b"></i><b>15–25%</b> <span class="cnt">11</span><div class="cat-p"><b>ПС — від 20%</b>, Аквамарин, Таїровські сади, Сади Рів'єри, Акварель-3, Акварель-7, Акварель-10, KADORR City, KEKS, Derby Style House, Простір Eco City</div></div><div class="cat"><i style="background:#e8897d"></i><b>Від 30%</b> <span class="cnt">6</span><div class="cat-p">Прохоровський квартал, ЖК Модерн, Посейдон, Еллада 6, ARTVILLE, Удобний</div></div><div class="cat"><i style="background:#c9ced8"></i><b>Не вказано</b> <span class="cnt">6</span><div class="cat-p">RealPark (+NOVA), Акрополь, AVINION, Атмосфера, RUE MÉNARS, Одеські традиції</div></div></div></div></div>
 </div>
 <div class="meth"><b>Методологія.</b> Ціни — з ЛУН (сторінки ЖК; для СТИКОН — сайт забудовника, коли доступний; ARTVILLE — zezman.ua; акції Гефеста — gefest.ua). Вилка проєкту за типом = мінімум–максимум по всіх чергах сегмента; <b>середня та медіана ринку</b> рахуються по серединах вилок проєктів. <b>Готові</b> = введені в експлуатацію + збудовані доми з минулим заявленим вводом (позначка «†» — ввід не підтверджено). <b>KADORR City</b> (ціни з ремонтом) — у вилках із «*», але поза середніми/медіанами. <b>KEKS і 70 Перлина</b> — за нижньою межею вилки (верх — імовірно лоти з ремонтом/нетипові). Мін. чек = найдешевша квартира типу (з ЛУН або площа×ціна). Знімки фіксуються на початку місяця; порівняння «було» — до попереднього знімка. Червень 2026 звірено з презентацією моніторингу до долара.</div>
 </main>
 <script>
-const CH = {"months": ["Тра 2026", "Чер 2026", "Лип 2026"], "med": {"done": {"1k": [1125, 1125, 1262], "2k": [1180, 1165, 1200], "3k": [1150, 1150, 1112]}, "build": {"1k": [988, 988, 975], "2k": [958, 962, 945], "3k": [851, 850, 860]}}, "instCats": [["До 1,5 року", 3], ["2–3 роки", 8], ["~4 роки і більше", 10], ["Індивід. / не вказано", 4]], "downCats": [["До 10%", 2], ["15–25%", 11], ["Від 30%", 6], ["Не вказано", 6]], "catCol": ["#D6D9AC", "#999F4F", "#5F652F", "#B9BFC9"], "geo": {"2026-05": {"tairovo": 852, "sea_sw": 1185, "primor": 1300, "center": 960, "north": 830}, "2026-06": {"tairovo": 850, "sea_sw": 1185, "primor": 1305, "center": 968, "north": 852}, "2026-07": {"tairovo": 835, "sea_sw": 1200, "primor": 1310, "center": 950, "north": 860}}, "geoShort": {"tairovo": "Таїрово та Пд-Зх", "sea_sw": "Біля моря", "primor": "Приморський р-н", "center": "Центр", "north": "Північ"}, "geoPos": {"tairovo": [46.41, 30.69, 3200, "left"], "sea_sw": [46.4, 30.755, 3200, "right"], "primor": [46.443, 30.752, 1800, "right"], "center": [46.47, 30.71, 1900, "left"], "north": [46.54, 30.78, 5200, "top"]}, "psPos": [46.338, 30.652], "psTip": "<b>Парк Совіньйон</b>№7 $1 100/м² · №8 від $950/м²"};
+const CH = {"months": ["Тра 2026", "Чер 2026", "Лип 2026"], "med": {"done": {"1k": [1125, 1125, 1262], "2k": [1180, 1165, 1200], "3k": [1150, 1150, 1112]}, "build": {"1k": [988, 988, 975], "2k": [958, 962, 945], "3k": [851, 850, 860]}}, "instCats": [["До 1,5 року", 3, "#e8897d"], ["2–3 роки", 8, "#f2cf6b"], ["~4 роки і більше", 10, "#8cc79c"], ["Індивід. / не вказано", 4, "#c9ced8"]], "downCats": [["До 10%", 2, "#8cc79c"], ["15–25%", 11, "#f2cf6b"], ["Від 30%", 6, "#e8897d"], ["Не вказано", 6, "#c9ced8"]], "geo": {"2026-05": {"tairovo": 852, "sea_sw": 1185, "primor": 1300, "center": 960, "north": 830}, "2026-06": {"tairovo": 850, "sea_sw": 1185, "primor": 1305, "center": 968, "north": 852}, "2026-07": {"tairovo": 835, "sea_sw": 1200, "primor": 1310, "center": 950, "north": 860}}, "geoShort": {"tairovo": "Таїрово та Пд-Зх", "sea_sw": "Біля моря", "primor": "Приморський р-н", "center": "Центр", "north": "Північ"}, "zcol": {"tairovo": "#82a8d9", "sea_sw": "#8cc79c", "primor": "#e8897d", "center": "#f2cf6b", "north": "#b39ddb"}, "pts": [{"id": "prohorovskyi", "n": "Прохоровський квартал", "g": "center", "p": [46.46808, 30.7152], "ap": false}, {"id": "modern", "n": "ЖК Модерн", "g": "tairovo", "p": [46.43341, 30.74292], "ap": false}, {"id": "realpark", "n": "RealPark (+NOVA)", "g": "tairovo", "p": [46.45597, 30.67616], "ap": false}, {"id": "aquamarine", "n": "Аквамарин", "g": "sea_sw", "p": [46.39234, 30.74644], "ap": false}, {"id": "tairsady", "n": "Таїровські сади", "g": "tairovo", "p": [46.38509, 30.70814], "ap": false}, {"id": "sadyriv", "n": "Сади Рів'єри", "g": "north", "p": [46.56516, 30.83055], "ap": false}, {"id": "poseidon", "n": "Посейдон", "g": "sea_sw", "p": [46.38991, 30.74653], "ap": false}, {"id": "akropol", "n": "Акрополь", "g": "primor", "p": [46.43956, 30.7473], "ap": false}, {"id": "ellada6", "n": "Еллада 6", "g": "sea_sw", "p": [46.43805, 30.7618], "ap": false}, {"id": "avinion", "n": "AVINION", "g": "sea_sw", "p": [46.37637, 30.73832], "ap": false}, {"id": "akvarel3", "n": "Акварель-3", "g": "center", "p": [46.48726, 30.71333], "ap": false}, {"id": "akvarel7", "n": "Акварель-7", "g": "north", "p": [46.49349, 30.69674], "ap": false}, {"id": "akvarel10", "n": "Акварель-10", "g": "north", "p": [46.58765, 30.81463], "ap": false}, {"id": "kadorr", "n": "KADORR City", "g": "primor", "p": [46.44626, 30.73441], "ap": false}, {"id": "perlina70", "n": "70 Перлина", "g": "tairovo", "p": [46.41159, 30.7217], "ap": false}, {"id": "artville", "n": "ARTVILLE", "g": "tairovo", "p": [46.4472, 30.63445], "ap": false}, {"id": "keks", "n": "KEKS", "g": "tairovo", "p": [46.46053, 30.63327], "ap": false}, {"id": "derby", "n": "Derby Style House", "g": "primor", "p": [46.44515, 30.74044], "ap": false}, {"id": "atmosfera", "n": "Атмосфера", "g": "sea_sw", "p": [46.43526, 30.76396], "ap": false}, {"id": "udobny", "n": "Удобний", "g": "primor", "p": [46.45723, 30.74061], "ap": false}, {"id": "ruemenars", "n": "RUE MÉNARS", "g": "tairovo", "p": [46.41018, 30.72851], "ap": false}, {"id": "odestrad", "n": "Одеські традиції", "g": "tairovo", "p": [46.39618, 30.71974], "ap": false}, {"id": "odesacity", "n": "ODESA CITY", "g": "north", "p": [46.48167, 30.6805], "ap": false}, {"id": "ecocity", "n": "Простір Eco City", "g": "center", "p": [46.457, 30.712], "ap": true}], "pmin": {"2026-05": {"prohorovskyi": 810, "modern": 1000, "realpark": 770, "aquamarine": 920, "tairsady": 790, "sadyriv": 780, "poseidon": 1100, "akropol": 1310, "ellada6": 1160, "avinion": 1100, "akvarel3": 1200, "akvarel7": 1000, "akvarel10": 770, "kadorr": 1540, "perlina70": 1360, "artville": 760, "keks": 700, "derby": 1050, "atmosfera": 1650, "udobny": 990, "ruemenars": 1400, "odestrad": 1050, "odesacity": 770, "ecocity": 770}, "2026-06": {"prohorovskyi": 810, "modern": 1000, "realpark": 770, "aquamarine": 920, "tairsady": 780, "sadyriv": 790, "poseidon": 1100, "akropol": 1310, "ellada6": 1160, "avinion": 1100, "akvarel3": 1200, "akvarel7": 1000, "akvarel10": 800, "kadorr": 1540, "perlina70": 1360, "artville": 760, "keks": 700, "derby": 1100, "atmosfera": 1960, "udobny": 990, "ruemenars": 1400, "odestrad": 1050, "odesacity": 780, "ecocity": 770}, "2026-07": {"prohorovskyi": 810, "modern": 1000, "realpark": 770, "aquamarine": 920, "tairsady": 780, "sadyriv": 790, "poseidon": 1100, "akropol": 1310, "ellada6": 1160, "avinion": 1050, "akvarel3": 1200, "akvarel7": 1000, "akvarel10": 800, "kadorr": 1670, "perlina70": 1400, "artville": 760, "keks": 700, "derby": 1100, "atmosfera": 1960, "udobny": 990, "ruemenars": 1400, "odestrad": 1050, "odesacity": 800, "ecocity": 770}}, "geoPos": {"tairovo": [46.42502, 30.69561, "left"], "sea_sw": [46.40639, 30.75141, "right"], "primor": [46.44705, 30.74069, "right"], "center": [46.47078, 30.71351, "left"], "north": [46.53199, 30.7556, "top"]}, "psPos": [46.34499, 30.67449], "psTip": "<b>Парк Совіньйон</b>№7 $1 100/м² · №8 від $950/м²"};
 const sel = document.getElementById('msel');
 function show(m){document.querySelectorAll('.mblock').forEach(b=>b.classList.toggle('on', b.dataset.m===m)); updMap(m);}
 sel.onchange = () => show(sel.value);
 const TC = {"1k":"#3D74B8","2k":"#6F7D2C","3k":"#8A5FA8"};
 const TL = {"1k":"1к","2k":"2к","3k":"3к"};
+Chart.register(ChartDataLabels);
 function lineChart(id, seg){
   const ds = Object.keys(CH.med[seg]).map(t => ({label: TL[t], data: CH.med[seg][t], borderColor: TC[t], backgroundColor: TC[t], borderWidth: 2, pointRadius: 4, pointHoverRadius: 6, spanGaps: true, tension: .15}));
   new Chart(document.getElementById(id), {type:'line', data:{labels: CH.months, datasets: ds},
-    options:{responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom', labels:{boxWidth:10, boxHeight:10, font:{family:'Proba Pro', size:11}}}, tooltip:{callbacks:{label: c => ' ' + c.dataset.label + ': $' + c.parsed.y + '/м²'}}},
+    options:{responsive:true, maintainAspectRatio:false, layout:{padding:{top:16, right:22}},
+      plugins:{legend:{position:'bottom', labels:{boxWidth:10, boxHeight:10, font:{family:'Proba Pro', size:11}}}, tooltip:{callbacks:{label: c => ' ' + c.dataset.label + ': $' + c.parsed.y + '/м²'}},
+        datalabels:{align:'top', offset:4, color:'#313746', font:{family:'Proba Pro', size:9.5, weight:600}, formatter: v => v==null?'':'$'+v.toLocaleString('uk')}},
       scales:{y:{grid:{color:'rgba(49,55,70,.06)'}, ticks:{font:{family:'Proba Pro', size:10}, callback: v => '$'+v}}, x:{grid:{display:false}, ticks:{font:{family:'Proba Pro', size:10}}}}}});
 }
 lineChart('chDone','done'); lineChart('chBuild','build');
 function donut(id, cats){
   new Chart(document.getElementById(id), {type:'doughnut',
-    data:{labels: cats.map(c=>c[0]), datasets:[{data: cats.map(c=>c[1]), backgroundColor: CH.catCol.slice(0, cats.length), borderColor:'#F7F5F2', borderWidth: 2}]},
-    options:{responsive:true, maintainAspectRatio:false, cutout:'58%',
-      plugins:{legend:{display:false}, tooltip:{callbacks:{label: c => ' ' + c.label + ': ' + c.parsed + ' проєкт(ів)'}}}}});
+    data:{labels: cats.map(c=>c[0]), datasets:[{data: cats.map(c=>c[1]), backgroundColor: cats.map(c=>c[2]), borderColor:'#F7F5F2', borderWidth: 2}]},
+    options:{responsive:true, maintainAspectRatio:false, cutout:'55%',
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label: c => ' ' + c.label + ': ' + c.parsed + ' проєкт(ів)'}},
+        datalabels:{color:'#313746', font:{family:'Proba Pro', size:13, weight:700}, formatter: v => v}}}});
 }
 donut('chInst', CH.instCats); donut('chDown', CH.downCats);
 
-// Карта гео-зон: кружки зон з медіаною $/м² обраного місяця + маркер ПС
+// Карта: точні точки ЖК (координати з ЛУН) кольором зони + підписи зон з медіаною місяця + ПС
 const map = L.map('map', {scrollWheelZoom:false}).setView([46.42, 30.72], 11);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {attribution:'© OpenStreetMap · © CARTO', maxZoom: 16}).addTo(map);
+const ptM = {};
+CH.pts.forEach(pt => {
+  ptM[pt.id] = L.circleMarker(pt.p, {radius: 7, color:'#fff', weight: 2, fillColor: CH.zcol[pt.g], fillOpacity: .95}).addTo(map)
+    .bindTooltip('', {direction:'top', className:'zlab', opacity: 1});
+});
 const zc = {};
-Object.entries(CH.geoPos).forEach(([g, [la, lo, r, dir]]) => {
-  zc[g] = L.circle([la, lo], {radius: r, color:'#999F4F', weight: 2, fillColor:'#999F4F', fillOpacity: .16}).addTo(map)
-    .bindTooltip('', {permanent: true, direction: dir, className:'zlab', opacity: 1});
+Object.entries(CH.geoPos).forEach(([g, [la, lo, dir]]) => {
+  zc[g] = L.circleMarker([la, lo], {radius: 0, opacity: 0, fillOpacity: 0, interactive: false}).addTo(map)
+    .bindTooltip('', {permanent: true, direction: dir, className:'zlab', opacity: .96});
 });
 const psM = L.circleMarker(CH.psPos, {radius: 9, color:'#F0CF4B', weight: 3, fillColor:'#313746', fillOpacity: 1}).addTo(map)
   .bindTooltip(CH.psTip, {permanent: true, direction:'bottom', className:'zlab ps', opacity: 1});
-map.fitBounds(L.featureGroup([...Object.values(zc), psM]).getBounds().pad(0.10));
+map.fitBounds(L.featureGroup([...Object.values(ptM), psM]).getBounds().pad(0.10));
 function updMap(m){
-  const gm = CH.geo[m] || {};
-  Object.entries(zc).forEach(([g, c]) => c.setTooltipContent('<b>' + CH.geoShort[g] + '</b>' + (gm[g] ? 'медіана $' + gm[g].toLocaleString('uk') + '/м²' : '—')));
+  const gm = CH.geo[m] || {}, pm = CH.pmin[m] || {};
+  Object.entries(zc).forEach(([g, c]) => c.setTooltipContent('<i class="zdot" style="background:' + CH.zcol[g] + '"></i><b>' + CH.geoShort[g] + '</b>' + (gm[g] ? 'медіана $' + gm[g].toLocaleString('uk') + '/м²' : '—')));
+  CH.pts.forEach(pt => ptM[pt.id].setTooltipContent('<b>' + pt.n + '</b>' + (pm[pt.id] ? 'від $' + pm[pt.id].toLocaleString('uk') + '/м²' : 'у знімку відсутній') + (pt.ap ? ' · координата приблизна' : '')));
 }
 show(sel.value);
 </script></body></html>
