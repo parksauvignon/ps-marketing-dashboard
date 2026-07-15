@@ -3,7 +3,7 @@
 @font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
 @font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
-:root{--olive:#999F4F;--yellow:#F0CF4B;--navy:#313746;--gray:#767C8D;--cream:#F7F5F2;--line:rgba(49,55,70,.09);--shadow:0 10px 30px rgba(49,55,70,.07)}
+:root{--olive:#999F4F;--yellow:#F0CF4B;--navy:#313746;--gray:#767C8D;--cream:#F7F5F2;--line:rgba(49,55,70,.09);--shadow:0 10px 30px rgba(49,55,70,.07);--olive-d:#7d8337;--c-ours:#7d8337;--c-ours-bg:rgba(153,159,79,.13);--c-leak:#c0392b;--c-leak-bg:rgba(224,76,96,.11);--c-comp:#c98a1e;--c-comp-bg:rgba(240,207,75,.2);--c-post:#767C8D;--c-post-bg:rgba(118,124,141,.12);--c-not:#313746;--c-not-bg:rgba(49,55,70,.09)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Proba Pro',system-ui,sans-serif;background:var(--cream);color:var(--navy);line-height:1.5}
 .hdr{position:sticky;top:0;z-index:20;background:rgba(247,245,242,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -47,11 +47,61 @@ ul.tick li:last-child{border-bottom:0}ul.tick li::before{content:"";position:abs
 .ft{margin-top:40px;text-align:center;color:var(--gray);font-size:12px}
 .note{font-size:12px;color:var(--gray);margin-top:6px}
 b .est,.est{color:var(--gray);font-weight:600}
+/* --- Journey (шлях клієнта) --- */
+.stepwrap{overflow-x:auto;scrollbar-width:thin;padding-bottom:4px}
+.stepper{display:flex;align-items:stretch;gap:0;min-width:640px}
+.step{flex:1;text-align:center;position:relative;padding:0 4px}
+.step .node{width:34px;height:34px;border-radius:50%;background:var(--cream);border:2px solid var(--olive);color:var(--olive-d);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;position:relative;z-index:2}
+.step .snm{font-size:12px;font-weight:700}.step .sd{font-size:10.5px;color:var(--gray);margin-top:2px;line-height:1.35}
+.step::after{content:"";position:absolute;top:17px;left:50%;width:100%;height:2px;background:var(--line);z-index:1}.step:last-child::after{display:none}
+.death{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+.death .d{flex:1 1 300px;border-radius:12px;padding:11px 13px;font-size:12px;line-height:1.5}
+.death .d.d1{background:var(--c-comp-bg);border-left:4px solid var(--c-comp)}.death .d.d2{background:var(--c-leak-bg);border-left:4px solid var(--c-leak)}
+.death .d b{font-weight:700}.death .d .big{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+.death .d a{color:inherit}
+.filter{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.fbtn{border:1px solid var(--line);background:#fff;color:var(--navy);font:inherit;font-weight:700;font-size:12px;padding:7px 13px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.fbtn .n{background:rgba(49,55,70,.08);color:var(--gray);font-size:10.5px;padding:1px 6px;border-radius:999px}
+.fbtn[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}.fbtn[aria-pressed="true"] .n{background:rgba(255,255,255,.18);color:#fff}
+.tracks{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:820px){.tracks{grid-template-columns:1fr 1fr}}
+.track{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;border-left-width:5px}
+.track.o-ours{border-left-color:var(--c-ours)}.track.o-leak{border-left-color:var(--c-leak)}.track.o-comp{border-left-color:var(--c-comp)}.track.o-post{border-left-color:var(--c-post)}.track.o-not{border-left-color:var(--c-not)}
+.thead{padding:13px 15px 4px;cursor:pointer;user-select:none}
+.trow{display:flex;align-items:flex-start;gap:8px;justify-content:space-between}
+.tnum{font-size:11px;font-weight:700;color:var(--gray)}
+.ttitle{font-size:14px;font-weight:700;line-height:1.3}
+.tpersona{font-size:11.5px;color:var(--gray);font-weight:600;margin-top:1px}
+.obadge{flex:0 0 auto;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.obadge.o-ours{background:var(--c-ours-bg);color:var(--c-ours)}.obadge.o-leak{background:var(--c-leak-bg);color:var(--c-leak)}.obadge.o-comp{background:var(--c-comp-bg);color:#96690f}.obadge.o-post{background:var(--c-post-bg);color:var(--c-post)}.obadge.o-not{background:var(--c-not-bg);color:var(--c-not)}
+.rail{display:flex;align-items:center;padding:12px 15px 4px}
+.rr{flex:1;display:flex;align-items:center}
+.pt{width:13px;height:13px;border-radius:50%;flex:0 0 auto;background:var(--cream);border:2px solid var(--line)}
+.pt.done{background:var(--olive);border-color:var(--olive)}
+.pt.leak{background:#fff;border-color:var(--c-leak);border-width:3px;box-shadow:0 0 0 3px var(--c-leak-bg)}
+.pt.win{background:var(--c-ours);border-color:var(--c-ours);border-width:3px;box-shadow:0 0 0 3px var(--c-ours-bg)}
+.pt.pend{background:#fff;border-color:var(--line);border-style:dashed}
+.seg{flex:1;height:2px;background:var(--line)}.seg.on{background:var(--olive)}
+.railcap{display:flex;justify-content:space-between;padding:0 15px;font-size:9.5px;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.railcap span{flex:1;text-align:center}.railcap span:first-child{text-align:left}.railcap span:last-child{text-align:right}
+.tsum{padding:8px 15px 14px}
+.tsum .lk{font-size:12.5px;font-weight:700;line-height:1.4}.tsum .lk .arw{color:var(--gray)}
+.tsum .lk.o-ours{color:var(--c-ours)}.tsum .lk.o-leak{color:var(--c-leak)}.tsum .lk.o-comp{color:#96690f}.tsum .lk.o-post{color:var(--c-post)}.tsum .lk.o-not{color:var(--c-not)}
+.tsum .lk a,.tsum .ps a{color:inherit}
+.tsum .ps{font-size:12px;color:var(--navy);margin-top:6px;line-height:1.45}.tsum .ps b{color:var(--olive-d)}
+.expand{font-size:11px;color:var(--gray);font-weight:700;margin-top:9px;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.detail{display:none;border-top:1px solid var(--line);margin:2px 15px 0;padding:12px 0 15px}
+.track.open .detail{display:block}.track.open .expand .ch{transform:rotate(90deg)}
+.expand .ch{transition:.15s;display:inline-block}
+.drow{font-size:12px;line-height:1.5;margin-bottom:9px}.drow .k{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--gray);display:block;margin-bottom:2px}
+.dstages{margin-top:11px;border-top:1px dashed var(--line);padding-top:11px}
+.dstage{display:flex;gap:9px;font-size:12px;padding:5px 0;line-height:1.45}
+.dstage .si{flex:0 0 92px;font-weight:700;color:var(--navy);font-size:11px}
+.dstage .stt{color:var(--gray)}.dstage.leakstage .stt{color:var(--c-leak);font-weight:600}
 </style></head><body>
 <div class="hdr"><div class="brand">Парк Совіньйон<small>Стратегія · контекст</small></div><nav class="hnav"><a class="hlink" href="index.html">Дашборд</a><a class="hlink on" href="strategy.html">Стратегія</a><a class="hlink" href="competitors.html">Конкуренти</a><a class="hlink" href="prices.html">Ціни</a><a class="hlink" href="own_market.html">Первинка/Вторинка</a><a class="hlink" href="experiments.html">Експерименти</a><a class="hlink" href="ceo.html">Звіт CEO</a></nav></div>
 <main>
 <div class="meta">
-<span>Оновлено: <b>15 липня 2026</b> · переглянути до: <b>15 жовтня 2026</b></span>
+<span>Оновлено: <b>16 липня 2026</b> · переглянути до: <b>16 жовтня 2026</b></span>
 <span class="leg"><span class="tag f">ФАКТ</span><span class="tag h">🔶 гіпотеза</span><span class="tag e">ОЦІНКА</span></span>
 </div>
 <p class="sub">Це «повільний» шар — <b>чому і куди ми граємо</b>. Оновлюється щоквартально. Операційні місячні цифри — у Дашборді та Звіті CEO; тут — продукт, ринок, аудиторія, позиціонування.</p>
@@ -130,7 +180,28 @@ b .est,.est{color:var(--gray);font-weight:600}
 </div>
 <div class="callout" style="margin-top:14px">Військові з єОселя → <b>дім №7 (готове, проходить)</b>: 2к/3к для сімей 3–4. Дім №8 (будується) під програму не йде до вводу. IT-спеціалісти — <b>прибрано</b> (не підтверджено даними). <span class="tag f">ФАКТ</span> <span class="note">Джерело: project_positioning_personas + CORRECTION єОселя (липень 2026).</span></div>
 
-<h2 class="band"><span class="ic">4</span>Позиціонування / УТП</h2>
+<h2 class="band"><span class="ic">4</span>Шлях клієнта і точки втрати</h2>
+<p class="sub">Як персони йдуть від ідеї до купівлі — і де ми їх втрачаємо. <span class="tag f">ФАКТ</span> ціни/оффери/воронка · <span class="tag e">модель</span> психологія шляхів (частки не виміряні). Ринкова рамка (4 прилавки) і ціни вторинки — на сторінці <a href="own_market.html" style="color:var(--olive-d);font-weight:700">Первинка/Вторинка ↗</a>.</p>
+<div class="card">
+<div class="stepwrap"><div class="stepper">
+<div class="step"><div class="node">1</div><div class="snm">Ідея / тригер</div><div class="sd">втома від міста, продаж вторинки, релокація, право на єОселя</div></div>
+<div class="step"><div class="node">2</div><div class="snm">Пошук</div><div class="sd">ЛУН / OLX / Instagram, «Совіньйон / Таїрово», дзвінок / заявка</div></div>
+<div class="step"><div class="node">3</div><div class="snm">Що бачить</div><div class="sd">первинка vs вторинка ПС + реклама ARTVILLE / Таировські / Akvarel</div></div>
+<div class="step"><div class="node">4</div><div class="snm">Зустріч / шоурум</div><div class="sd">walk-in — наш найкращий канал; показ квартири-шоуруму</div></div>
+<div class="step"><div class="node">5</div><div class="snm">Рішення</div><div class="sd">порівняння з вторинкою ПС і конкурентами, торг, сумніви</div></div>
+<div class="step"><div class="node">6</div><div class="snm">Купівля</div><div class="sd">договір, розстрочка / 100% / сертифікат</div></div>
+</div></div>
+<div class="death">
+<div class="d d1"><b class="big">Обрив №1 · стадії 2→4 · −80% · МАРКЕТИНГ</b>«Дзвінок → цільовий»: Meta ллє не тих (FB кваліфікується <b>6%</b> проти walk-in). Лід гине ще до зустрічі.</div>
+<div class="d d2"><b class="big">Обрив №2 · стадії 4→6 · −81% · ПРОДАЖІ</b>«Зустріч → угода» (~10–17%): ідуть до приватника (<a href="own_market.html">вторинка ПС ↗</a>) або конкурента — угода часто невидима CRM (OLX).</div>
+</div>
+<div class="note" style="margin-top:10px"><b>Дві смерті — два власники.</b> Обрив №1 лікує маркетинг (квалификація + таргет), обрив №2 — продажі (ремонт-пакет, шоурум, скрипт «у тому ж ЖК дешевше»).</div>
+</div>
+<div class="filter" id="jfilter"></div>
+<div class="tracks" id="jtracks"></div>
+<div class="callout" style="margin-top:14px"><b>Три стоки:</b> 🔴 власна вторинка ПС (Шляхи 1, 6-одинаки, 7) · ⚠️ конкуренти (Шляхи 2, 3, 4-5) · ⏳ відклав / не наш (Шляхи 8, 5). «Зелені» шляхи (2, 4, 6, 7) підсилювати; «червоний» (1) — лагодити вторинкою; конкурентні (3) і не-наш (5) — квалификувати чесно.</div>
+
+<h2 class="band"><span class="ic">5</span>Позиціонування / УТП</h2>
 <div class="utp">
 <small>УТП-ядро</small>
 <div class="big">«Готовий дім у власному парку біля моря — заходь і живи серед своїх».</div>
@@ -154,17 +225,20 @@ b .est,.est{color:var(--gray);font-weight:600}
 </div>
 <p class="src">Джерело: CMO-синтез (персони · CJM · позиціонування, липень 2026).</p>
 
-<h2 class="band"><span class="ic">5</span>У що граємо / чого не робимо</h2>
+<h2 class="band"><span class="ic">6</span>У що граємо / чого не робимо</h2>
+<p class="sub">Три важелі повторюються майже в усіх шляхах: ремонт-пакет, шоурум-магніт, чесна само-квалификація.</p>
 <div class="two">
 <div class="stake for">
 <h4>✅ Ставки</h4>
 <ul class="tick">
-<li>walk-in / шоурум як головний конверсійний канал</li>
+<li>walk-in / шоурум як головний конверсійний канал (магніт «прийди в готову квартиру»)</li>
+<li><b>ремонт-пакет / партнер</b> — головна дыра проти вторинки і Akvarel/KADORR</li>
 <li>готовність — «заселяйся зараз»</li>
 <li>спільнота мешканців</li>
 <li>репутація ЗАРС (30 років)</li>
 <li>формат-зв'язка (не окремі фічі)</li>
 <li>єОселя на дім №7 — таргет на сім'ї 3–4 (2к/3к)</li>
+<li><b>чесна само-квалификація + таргет</b> — не тягти у воронку не наших (сім'я без авто, yield-інвестор)</li>
 </ul>
 </div>
 <div class="stake against">
@@ -178,6 +252,37 @@ b .est,.est{color:var(--gray);font-weight:600}
 </div>
 </div>
 
-<div class="ft">Стратегія · квартальний перегляд · маркетинг-платформа ЖК «Парк Совіньйон». Ціни ринку — пропозиції (asking), не угод.</div>
+<div class="ft">Стратегія · квартальний перегляд · маркетинг-платформа ЖК «Парк Совіньйон». Ціни ринку — пропозиції (asking), не угод.<br>ФАКТ: ціни, оффери, вторинка, CRM-воронка зібрані. Модель: психологія та частки шляхів виведені з даних (анкета n=7, воронка, атрибуція) — не виміряні поштучно.</div>
 </main>
+<script>
+const J={"out": {"ours": {"cls": "o-ours", "lbl": "🟢 наше поле"}, "leak": {"cls": "o-leak", "lbl": "🔴 течь у вторинку"}, "comp": {"cls": "o-comp", "lbl": "⚠️ до конкурента"}, "post": {"cls": "o-post", "lbl": "⏳ відклав"}, "not": {"cls": "o-not", "lbl": "⛔ не наш"}}, "stages": ["Ідея", "Пошук", "Що бачить", "Зустріч", "Рішення", "Купівля"], "filters": [["all", "Усі"], ["ours", "🟢 наше"], ["leak", "🔴 течь"], ["comp", "⚠️ конкурент"], ["post", "⏳ відклав"], ["not", "⛔ не наш"]], "paths": [{"n": 1, "out": "leak", "title": "Апгрейдер 40+ з кешем, хоче заїхати одразу в Совіньйон", "persona": "Ядро аудиторії · walk-in · $72k", "win": false, "leakStage": 5, "leakTo": "вторинка нашого ж ЖК (−15% + ремонт + одразу)", "ps": "<b>Ремонт-пакет</b> · шоурум · чиста первинна угода (без податків/ризиків вторинки) · вибір поверху · для кешу −$120/м² при 100% · <a href=\"own_market.html\">див. лоти вторинки ↗</a>", "d": {"trigger": "Втомився від висотки/шуму/пробок/паркування; продав вторинку або є накопичення. «Хочу тишу, парк, приватність, для себе надовго».", "jtbd": "Змінити спосіб життя на камерний, зелений, приватний — статус «для себе», не інвестиція.", "pains": "Втома від міста й сусідів; страх «довго й клопітно з ремонтом»; не хоче переплачувати; боїться кота в мішку.", "sees": "Нашу готову 2к $1100/м² <b>без ремонту</b> — і поруч нашу ж вторинку 2к $945/м² з ремонтом+меблями, заїжджай сьогодні, дешевше на ~$12–13k.", "doubts": "У вторинки — юр-чистота, податки перепродажу, приховані дефекти; у нас — «навіщо платити більше й ще робити ремонт»."}, "stg": ["«хочу тишу, для себе»", "ЛУН/OLX, їде дивитися особисто", "наша первинка vs наша ж вторинка −15%", "walk-in, дивиться квартиру", "🔴 обирає вторинку — дешевше+ремонт", "угода на OLX, невидима CRM"]}, {"n": 2, "out": "ours", "title": "Апгрейдер / сім'я — потрібна розстрочка, всієї суми немає", "persona": "Стабільний дохід · без банку", "win": true, "leakStage": null, "leakTo": "наше поле: розстрочка без здорожчання, внесок від 20%, готовий №7 = нема ризику будови", "ps": "<b>Число-оффер у грн</b> («платіж від X грн/міс, без здорожчання») · для №7 — «платиш і одразу живеш» · чесне порівняння з 5-річними", "d": {"trigger": "Хочуть покращити житло зараз, але немає повної суми; стабільний дохід.", "jtbd": "Заїхати в якісне «тут і зараз», розтягнувши платіж.", "pains": "Банки/іпотека дорого й складно; страх переплати й «подорожчання»; недобуд.", "sees": "Конкуренти кричать числом — Таировські 16 300 грн/міс на 5 років, ARTVILLE від $320/міс, Odesa City внесок 10%/4 роки. У нас у рекламі — розпливчасте «оплачувати поступово» без цифри.", "doubts": "«У інших платіж менший і строк довший»; «а добудують?» (для №8)."}, "stg": ["хочуть покращити житло зараз", "«квартира в розстрочку, без банку»", "конкуренти з числом-платежем/міс", "показуємо готовий №7 = нема ризику", "розстрочка без здорожчання переважує", "🟢 наша угода"]}, {"n": 3, "out": "comp", "title": "Сім'я зі школярами — щоденна логістика дітей", "persona": "Причина відмови №2 (14,7%)", "win": false, "leakStage": 4, "leakTo": "конкуренти з міською інфраструктурою (Таировські сади, Прохоровський)", "ps": "<b>Не воювати ціною</b> · чесна карта часу в дорозі (само-квалификація) · ідея шкільного шатла · для сімей з 2 авто — «безпечна закрита територія + парк»", "d": {"trigger": "Зростаюча сім'я, потрібне безпечне середовище + сад/школа поруч.", "jtbd": "Безпечно, зелено, але щоб школа/сад/гуртки — без щоденного стресу логістики.", "pains": "Возять дітей авто 10–15 хв (ФАКТ локація); одне авто на сім'ю = дружина «замкнена»; довколишня інфраструктура бідна.", "sees": "Таировські сади прямо в рекламі — «дитячий садочок, майданчики, школа поруч»; Odesa City «місто в місті»; Прохоровський (школи пішки). Наш парк красивий, але школа/сад — на авто.", "doubts": "«Тут тихо й красиво, але як возити в школу щодня?»"}, "stg": ["потрібне безпечне середовище для дітей", "«ЖК з садком/школою поруч»", "Таировські/Прохоровський: інфраструктура пішки", "⚠️ на зустрічі усвідомлює логістику", "обирає місто заради школи", "—"]}, {"n": 4, "out": "ours", "title": "Інвестор — збереження капіталу / діаспора", "persona": "Наш, але вузький · НЕ оренда", "win": true, "leakStage": null, "leakTo": "наш вузький сценарій (не аренда-ROI — там ARTVILLE непереможний)", "ps": "Фрейм <b>«захисний актив у моря + недооцінений бізнес-клас (−18% до класу) + готовий вже сьогодні»</b> · чесно: ріст у доларі лише в бізнес-класі біля моря — і ми там", "d": {"trigger": "Є вільні гроші (продав актив / з-за кордону); не хоче тримати в готівці/депозиті.", "jtbd": "Захистити капітал, не втратити на інфляції; віра в ріст біля моря «в довгу». НЕ дохідність-оренда.", "pains": "Куди вкласти надійно; страх заморозки; не хоче керувати орендою.", "sees": "ARTVILLE давить «актив, що працює, від $320/міс, альтернатива депозиту» (133 оголошення); вторинка ПС «переуступки» дешевше. Наш інвест-кут у рекламі майже відсутній.", "doubts": "«А чи виросте? чи ліквідна далека локація?»"}, "stg": ["вільні гроші, захистити від інфляції", "«інвестиції в нерухомість Одеса»", "ARTVILLE «актив від $320/міс»", "даємо інвест-наратив «захисний актив»", "обирає збереження+ліквідність", "🟢 наша угода (вузько)"]}, {"n": 5, "out": "not", "title": "Інвестор — дохідність / оренда (yield)", "persona": "Дискваліфікувати швидко", "win": false, "leakStage": 2, "leakTo": "ARTVILLE/KEKS/Akvarel — і правильно: у нас далека локація, слабка оренда", "ps": "<b>Не витрачати бюджет і час сейлзів.</b> Квалификувати й відпускати або м'яко переводити в Шлях 4 «збереження капіталу»", "d": {"trigger": "Хоче купити дешевше, здавати/перепродати, максимальний ROI.", "jtbd": "Максимальна поточна дохідність.", "pains": "Низький вхід, керуюча компанія, швидкий cash-flow.", "sees": "ARTVILLE/KEKS/Akvarel (низький вхід, «під оренду», УК, море 15 хв); вторинка-переуступки.", "doubts": "«Де більший yield?» — і це не ми."}, "stg": ["хоче max ROI / оренду", "«квартира під оренду, дохідність»", "⛔ ARTVILLE/KEKS переконливіші", "—", "—", "—"]}, {"n": 6, "out": "ours", "title": "єОселя-покупець (сім'я або одинак)", "persona": "Дім №7 (готове) проходить під програму", "win": true, "leakStage": null, "leakTo": "наше поле: дім №7 (готове житло) проходить під єОселя — вести сюди, не на №8", "ps": "<b>НЕ знімати єОселя-№7</b> (дім №7 готовий → проходить; ПС числиться на dom.ria «єОселя на готове житло») · таргет: <b>сім'ї 3–4 особи → 2к/3к первинка</b> (по площі проходять), <b>одинаки/пари → вторинна 1к</b> (у забудовника розпродані) · дім №8 (будується) під програму НЕ вести · лагодити Meta-аудиторію (0% угод = таргет), не оффер · <a href=\"own_market.html\">вторинна 1к під єОселя ↗</a>", "d": {"trigger": "Перше/наступне житло, є право на єОселя (3–7%).", "jtbd": "Своє житло по держпідтримці, пільгова ставка.", "pains": "Немає повної суми; єОселя вимагає ГОТОВЕ житло ≤3 років (дім №7 ✅; дім №8 що будується — ні).", "sees": "Рекламу «єОселя від 3% на дім №7» — і дім №7 <b>справді проходить</b> (готове житло, ПС у списку єОселя на dom.ria). Площа-норма 52,5+21/чол (+10% новобуд): сім'я 3 чол→до ~80,8 м² (2к 65-74 проходять), 4 чол→до ~104 м² (3к 90-93 проходять). 1к у забудовника розпродані → одинаки беруть вторинну 1к ПС.", "doubts": "«Чи вистачить чека під стелю ціни/м²?» — топовий asking $1100 може вимагати більший внесок; дешевші лоти проходять чисто."}, "stg": ["право на єОселя (3–7%)", "«квартира єОселя Одеса, готове»", "дім №7 проходить (готове); №8 — ні", "підбір: сім'я→2к/3к, одинак→вторинна 1к", "єОселя-ставка + чек під стелю", "🟢 угода на дім №7 (або вторинна 1к)"]}, {"n": 7, "out": "comp", "title": "ВПО-релокант, шукає спокійний новий старт", "persona": "50/50 · спокій + спільнота", "win": false, "leakStage": 5, "leakTo": "вторинка ПС (готово+ремонт) або конкурент біля моря — АБО 🟢 наш готовий №7", "ps": "Наратив <b>«тихий готовий дім у парку, де формується спільнота»</b> · прийом сертифікатів + розстрочка · спільнота як емоційний гачок (біле пятно — ніхто не продає) · <a href=\"own_market.html\">див. лоти вторинки ↗</a>", "d": {"trigger": "Переїхав (Херсон/Миколаїв/Запоріжжя), вирішує осісти в Одесі; є гроші або сертифікат (єВідновлення).", "jtbd": "Спокій, тиша, безпека, «дім» — відновитися. (Подавати як спокій/приватність, БЕЗ військового фрейму.)", "pains": "Втрата колишнього дому/статусу; тривога; хоче готове й тихе, не будову.", "sees": "Нашу готову №7 (тихо, парк, спільнота) — і нашу ж вторинку з ремонтом дешевше; конкурентів біля моря (Посейдон/AVINION/Aqua Marine).", "doubts": "Локація/віддаленість; «чи приживуся»; ремонт."}, "stg": ["релокація, хоче осісти й відновитися", "«готова квартира, тихий район»", "наш №7 vs наша вторинка з ремонтом", "дивиться готове + спільноту", "⚠️ 50/50: вторинка або наш №7", "залежить від наративу"]}, {"n": 8, "out": "post", "title": "Відкладений попит / довго придивляється", "persona": "Дожати довірою", "win": false, "leakStage": 6, "leakTo": "відкладає або йде до того, хто переконливіше довів надійність", "ps": "<b>Ретаргетинг > охоплення</b> · контент-докази (заселений №7, хід №8 поетапно — просять у анкеті) · прозорість документів · «30 років ЗАРС» · чесний дедлайн-оффер", "d": {"trigger": "Думає про купівлю місяцями; стежить, порівнює, боїться помилитися.", "jtbd": "Купити «в правильний момент», не прогадати.", "pains": "Страх недобуду (для №8), страх переплати, невизначеність.", "sees": "Конкуренти дають прогрес-пруф (Сади Рів'єри — відео будови), знижки-дедлайни (Стікон «до 19.07»); наш ЗАРС слабо впізнаваний (ФАКТ анкета: половина не чула).", "doubts": "Довіра до забудовника + докази + момент «дешевше не стане»."}, "stg": ["думає місяцями, боїться помилитися", "моніторить соцмережі/ЛУН, хід будови", "конкуренти дають прогрес-пруф і дедлайни", "повертається, порівнює", "ще думає", "⏳ відкладає рішення"]}]};
+
+const OUT=J.out,STAGES=J.stages,PATHS=J.paths,FILTERS=J.filters;let active='all';
+function counts(k){return k==='all'?PATHS.length:PATHS.filter(p=>p.out===k).length}
+function renderFilter(){document.getElementById('jfilter').innerHTML=FILTERS.map(f=>`<button class="fbtn" data-k="${f[0]}" aria-pressed="${active===f[0]}">${f[1]}<span class="n">${counts(f[0])}</span></button>`).join('');
+ document.querySelectorAll('#jfilter .fbtn').forEach(b=>b.onclick=()=>{active=b.dataset.k;renderFilter();renderTracks()});}
+function rail(p){let h='<div class="rr">';for(let i=1;i<=6;i++){let c='pt ';if(p.win){c+=i<6?'done':'win'}else if(p.leakStage){if(i<p.leakStage)c+='done';else if(i===p.leakStage)c+='leak';else c+='pend'}
+ h+=`<span class="${c}" title="${STAGES[i-1]}"></span>`;if(i<6){let on=(p.win)||(p.leakStage&&i<p.leakStage);h+=`<span class="seg${on?' on':''}"></span>`}}return h+'</div>'}
+function card(p){const o=OUT[p.out];const lk=p.win?`<span class="arw">→ </span>${p.leakTo}`:`<span class="arw">→ утікає: </span>${p.leakTo}`;
+ const stages=p.stg.map((s,i)=>`<div class="dstage${(!p.win&&p.leakStage===i+1)?' leakstage':''}"><span class="si">${STAGES[i]}</span><span class="stt">${s||'—'}</span></div>`).join('');
+ return `<div class="track o-${o.cls.slice(2)} ${o.cls}" data-out="${p.out}">
+  <div class="thead" onclick="this.closest('.track').classList.toggle('open')">
+   <div class="trow"><div><div class="tnum">Шлях ${p.n}</div><div class="ttitle">${p.title}</div><div class="tpersona">${p.persona}</div></div><span class="obadge ${o.cls}">${o.lbl}</span></div>
+  </div>
+  <div class="rail">${rail(p)}</div>
+  <div class="railcap">${STAGES.map(s=>`<span>${s}</span>`).join('')}</div>
+  <div class="tsum"><div class="lk ${o.cls}">${lk}</div><div class="ps"><b>ПС:</b> ${p.ps}</div><div class="expand" onclick="this.closest('.track').classList.toggle('open')"><span class="ch">▸</span> повний розбір</div></div>
+  <div class="detail">
+   <div class="drow"><span class="k">Тригер</span>${p.d.trigger}</div>
+   <div class="drow"><span class="k">Мотив (JTBD)</span>${p.d.jtbd}</div>
+   <div class="drow"><span class="k">Болі</span>${p.d.pains}</div>
+   <div class="drow"><span class="k">Що бачить на ринку</span>${p.d.sees}</div>
+   <div class="drow"><span class="k">Сумніви</span>${p.d.doubts}</div>
+   <div class="dstages"><span class="k" style="color:var(--gray)">Покроково</span>${stages}</div>
+  </div>
+ </div>`}
+function renderTracks(){const list=active==='all'?PATHS:PATHS.filter(p=>p.out===active);document.getElementById('jtracks').innerHTML=list.map(card).join('')}
+if(J&&J.paths){renderFilter();renderTracks();}
+
+</script>
 </body></html>
