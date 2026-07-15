@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Первинка vs Вторинка · Парк Совіньйон</title>
+<style>
+@font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+:root{--olive:#999F4F;--yellow:#F0CF4B;--navy:#313746;--gray:#767C8D;--cream:#F7F5F2;--line:rgba(49,55,70,.09);--shadow:0 10px 30px rgba(49,55,70,.07)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Proba Pro',system-ui,sans-serif;background:var(--cream);color:var(--navy);line-height:1.45}
+.hdr{position:sticky;top:0;z-index:20;background:rgba(247,245,242,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:700;font-size:15px;line-height:1.1}.brand small{display:block;color:var(--gray);font-size:11px;font-weight:500}
+.hnav{display:flex;gap:7px;align-items:center;margin-left:auto}
+.hlink{color:var(--navy);font-weight:700;font-size:12.5px;text-decoration:none;background:#fff;border:1px solid var(--line);padding:8px 13px;border-radius:999px;white-space:nowrap;line-height:1}
+.hlink.on{background:var(--yellow);border-color:transparent}
+@media(max-width:900px){.hnav{order:3;width:100%;margin-left:0;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 0 4px}}
+main{max-width:1080px;margin:0 auto;padding:18px 16px 60px}
+.sub{color:var(--gray);font-size:13px;margin:0 2px 14px}
+h2.band{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;margin:34px 2px 4px}
+h2.band .ic{min-width:26px;height:26px;border-radius:8px;background:var(--olive);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+.grid{display:grid;gap:14px}@media(min-width:720px){.g2{grid-template-columns:1fr 1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px 18px}
+.hh{display:flex;align-items:center;justify-content:space-between;gap:8px}.hh h3{font-size:16px}
+.pill{background:rgba(49,55,70,.06);color:var(--gray);font-size:11px;font-weight:700;border-radius:999px;padding:3px 10px}
+.big{font-size:22px;font-weight:700;margin:8px 0 12px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.mx{border-collapse:collapse;width:100%;min-width:440px;font-size:12.5px}
+table.mx th,table.mx td{padding:7px 9px;text-align:center;border-bottom:1px solid var(--line)}
+table.mx th{font-size:11px;color:var(--gray);font-weight:700;background:rgba(49,55,70,.03)}
+table.mx td.l,table.mx th.l{text-align:left}
+.mut{color:var(--gray);font-size:11px}
+.gap{font-weight:700;color:#b5533f}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px}
+@media(min-width:720px){.kpis{grid-template-columns:repeat(4,1fr)}}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;box-shadow:var(--shadow)}
+.kpi .v{font-size:21px;font-weight:700}.kpi .l{color:var(--gray);font-size:12px;margin-top:4px}
+.callout{background:rgba(240,207,75,.16);border:1px solid rgba(240,207,75,.5);border-radius:14px;padding:14px 16px;font-size:13.5px;margin-top:12px}
+.callout b{color:#7a5c00}
+.two{display:grid;gap:14px;margin-top:6px}@media(min-width:720px){.two{grid-template-columns:1fr 1fr}}
+.stake{border-radius:14px;padding:14px 16px}
+.stake.lose{background:rgba(231,137,125,.1);border:1px solid rgba(231,137,125,.32)}
+.stake.win{background:rgba(153,159,79,.12);border:1px solid rgba(153,159,79,.3)}
+.stake h4{font-size:14px;margin-bottom:8px}
+ul.tick{list-style:none}ul.tick li{position:relative;padding:5px 0 5px 20px;font-size:13px;border-bottom:1px solid var(--line)}
+ul.tick li:last-child{border-bottom:0}ul.tick li::before{content:"";position:absolute;left:2px;top:11px;width:7px;height:7px;border-radius:2px;background:var(--olive)}
+.script{background:linear-gradient(135deg,#313746,#3d4457);color:#fff;border-radius:16px;padding:18px 20px;margin-top:14px}
+.script h4{color:var(--yellow);font-size:13px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+.script p{font-size:14px;line-height:1.55}
+.flag{background:rgba(231,137,125,.1);border:1px solid rgba(231,137,125,.3);border-radius:12px;padding:11px 14px;font-size:12.5px;margin-top:10px}
+.flag b{color:#b5533f}
+.tag{font-size:11px;font-weight:700;border-radius:999px;padding:3px 9px;background:rgba(118,124,141,.16);color:var(--gray)}
+.ft{margin-top:40px;text-align:center;color:var(--gray);font-size:12px}
+.provn{color:var(--gray);font-size:11.5px;font-style:italic;margin-top:10px}
+</style></head><body>
+<div class="hdr"><div class="brand">Парк Совіньйон<small>Первинка vs Вторинка</small></div><nav class="hnav"><a class="hlink" href="index.html">Дашборд</a><a class="hlink" href="strategy.html">Стратегія</a><a class="hlink" href="competitors.html">Конкуренти</a><a class="hlink" href="prices.html">Ціни</a><a class="hlink on" href="own_market.html">Первинка/Вторинка</a><a class="hlink" href="experiments.html">Експерименти</a><a class="hlink" href="ceo.html">Звіт CEO</a></nav></div>
+<main>
+<p class="sub" style="margin-top:6px">Два «прилавки» одного ЖК: залишки забудовника проти приватних перепродажів. Мета — бачити канібалізацію і вооружити відділ продажу. Помісячно. <b>Ціни — пропозиції (asking), не угод.</b></p>
+
+<h2 class="band"><span class="ic">1</span>Залишки забудовника (з CRM)</h2>
+<p class="sub">Наживо з CRM · станом на 2026-07-15 19:02. Разом по ПС: 70 квартир (1к 27 · 2к 39 · 3к 4).</p>
+<div class="grid g2">
+<div class="card">
+<div class="hh"><h3>Дім №7</h3><span class="pill">готовий · I кв. 2025</span></div>
+<div class="big">залишилось 16 квартир</div>
+<div class="scroll"><table class="mx"><thead><tr><th class="l">Тип</th><th>К-сть</th><th>Площа, м²</th><th>$/м²</th><th>Чек</th></tr></thead><tbody><tr><td class="l">2к</td><td>12</td><td>67.7–74.4</td><td>$1050–1050</td><td>$71 085–78 120</td></tr><tr><td class="l">3к</td><td>4</td><td>90.5–91.9</td><td>$1025–1025</td><td>$92 814–94 198</td></tr></tbody></table></div>
+</div>
+<div class="card">
+<div class="hh"><h3>Дім №8</h3><span class="pill">будується · IV кв. 2026</span></div>
+<div class="big">залишилось 54 квартир</div>
+<div class="scroll"><table class="mx"><thead><tr><th class="l">Тип</th><th>К-сть</th><th>Площа, м²</th><th>$/м²</th><th>Чек</th></tr></thead><tbody><tr><td class="l">1к</td><td>27</td><td>43.5–49.3</td><td>$1050–1050</td><td>$45 622–51 765</td></tr><tr><td class="l">2к</td><td>27</td><td>65.7–70.1</td><td>$1020–1020</td><td>$67 014–71 502</td></tr></tbody></table></div>
+</div>
+</div>
+
+<h2 class="band"><span class="ic">2</span>Вторинка ПС (перепродажі)</h2>
+<p class="sub">Знімок 2026-07. rieltor.ua — 8 лотів (детально). Оцінка чистого обсягу: ~10–15 лотів (dedup по площадках).</p>
+<div class="kpis">
+<div class="kpi"><div class="v">8</div><div class="l">лотів rieltor (усього ринок ~10–15)</div></div>
+<div class="kpi"><div class="v">$912–1018</div><div class="l">$/м² вторинна 2к</div></div>
+<div class="kpi"><div class="v">$978–1600</div><div class="l">$/м² вторинна 1к (у нас РОЗПРОДАНІ)</div></div>
+<div class="kpi"><div class="v">3 з 8</div><div class="l">лотів з ремонтом («заходь і живи»)</div></div>
+</div>
+<div class="card"><div class="scroll"><table class="mx"><thead><tr><th class="l">Тип</th><th>Площа</th><th>Поверх</th><th>Ціна</th><th>$/м²</th><th class="l">Стан</th></tr></thead><tbody><tr><td class="l">1к</td><td>45</td><td>4/5</td><td>$44 000</td><td>$978</td><td class="l">На оформленні</td></tr><tr><td class="l">1к</td><td>45</td><td>4/6</td><td>$44 000</td><td>$978</td><td class="l">Без комісії</td></tr><tr><td class="l">1к</td><td>31</td><td>6/6</td><td>$36 500</td><td>$1 177</td><td class="l">На оформленні</td></tr><tr><td class="l">1к</td><td>44</td><td>6/6</td><td>$54 999</td><td>$1 264</td><td class="l">З ремонтом</td></tr><tr><td class="l">1к</td><td>30</td><td>3/6</td><td>$48 000</td><td>$1 600</td><td class="l">З ремонтом</td></tr><tr><td class="l">2к</td><td>68</td><td>4/6</td><td>$62 000</td><td>$912</td><td class="l">Переуступка</td></tr><tr><td class="l">2к</td><td>73</td><td>4/6</td><td>$69 000</td><td>$945</td><td class="l">Стан від забудовника</td></tr><tr><td class="l">2к</td><td>55</td><td>5/6</td><td>$56 000</td><td>$1 018</td><td class="l">Ремонт з меблями</td></tr></tbody></table></div></div>
+<p class="sub" style="margin-top:10px">OLX: OLX ~6 лотів (чистих Таїрове/ПС ~3): 2к 57м² ~$72k (авт. ремонт, Лиманка); 1к 43,5м² ~$56k (з ремонтом, біля моря); 67м² ~$66k (розстрочка 2 роки, без комісії); 1к 43,5м² ~$56k (з ремонтом, «підходить під єОселя»); 2к 55м² ~$55k (море); 3к 90,9м² ~$90k (люкс).</p>
+<div class="flag"><b>єОселя:</b> єОселя проходить під вторинну 1к ПС (≤3 років, ~$36–48k) — НЕ під нашу первинну 2к/3к. Лот на OLX прямо помічений «підходить під єОселя».</div>
+<div class="flag"><b>Розстрочка:</b> Частина вторинки дає розстрочку («на 2 роки, без комісії») — наш козир «розстрочка тільки в забудовника» НЕ абсолютний.</div>
+
+<h2 class="band"><span class="ic">3</span>Два прилавки — пряме порівняння</h2>
+<p class="sub">$/м² первинка (дім №7, asking) vs вторинка ПС по типах. Розрив — на користь вторинки за готівку.</p>
+<div class="card"><div class="scroll"><table class="mx"><thead><tr><th class="l">Тип</th><th>Первинка (№7)</th><th>Вторинка ПС</th><th>Розрив</th><th class="l">Хто виграє</th></tr></thead><tbody><tr><td class="l">2к</td><td>$1100/м²<div class="mut">при 100% −$120 → ~$980</div></td><td>$912–1018/м²</td><td class="gap">−8…17%</td><td class="l">вторинка (готівка + ремонт)</td></tr><tr><td class="l">1к</td><td>—<div class="mut">у забудовника РОЗПРОДАНІ</div></td><td>$978–1600/м²</td><td class="gap">тільки вторинка</td><td class="l">вторинка (нас немає)</td></tr><tr><td class="l">3к</td><td>$1050/м²<div class="mut">дім №7 (~$95k)</div></td><td>$990–990/м²</td><td class="gap">≈ рівень</td><td class="l">≈ (мало лотів)</td></tr></tbody></table></div></div>
+<div class="callout"><b>Головне:</b> вторинних лотів ≈ стільки ж, скільки в нас (70 у забудовника vs ~10–15 приватних), і 2к на −8…17% дешевше + часто з ремонтом. Це пояснює частину обриву «зустріч→угода»: клієнт після зустрічі знаходить ту саму квартиру дешевше у приватника (угода йде на OLX, нам невидима).</div>
+
+<h2 class="band"><span class="ic">4</span>Де програємо / де виграємо → дії</h2>
+<div class="two">
+<div class="stake lose"><h4>⛔ Де програємо вторинці</h4><ul class="tick"><li>готівка (метр дешевше −8…17%)</li><li>готовий ремонт + меблі («заходь і живи»)</li><li>заїхати одразу під ключ</li><li>торг із приватником</li><li>1к у готовому — тільки там</li><li>єОселя під 1к ≤3 років</li></ul></div>
+<div class="stake win"><h4>✅ Де виграємо</h4><ul class="tick"><li>розстрочка без %, внесок від 20% (у вторинки майже нема)</li><li>нове + гарантія + чиста первинна угода (без податків перепродажу/перевірок)</li><li>вибір поверху/планування (18 квартир)</li><li>якість через шоурум</li><li>при 100% оплаті −$120/м² майже наздоганяє метр</li></ul></div>
+</div>
+<div class="script"><h4>Скрипт відпрацювання «в тому ж ЖК дешевше»</h4><p>Скрипт «в тому ж ЖК дешевше»: не сперечатися про ціну, а перевести на — розстрочка (у вторинки нема), нове + юридично чиста первинна угода (у вторинки податки перепродажу, перевірки, ризики), вибір поверху/планування, якість через шоурум. Для готівкового клієнта — акцент на −$120/м² при 100% + цінність новизни/чистоти. Для «з ремонтом» — ремонт-пакет/партнер.</p></div>
+<div class="card" style="margin-top:14px"><h4 style="font-size:14px;margin-bottom:8px">Дії</h4><ul class="tick"><li>Вооружити відділ продажу: ми структурно конкуруємо з власною вторинкою (не разово).</li><li>Ремонт-пакет / партнер — закрити «з ремонтом», інакше готівковий клієнт іде у вторинку.</li><li>єОселя — увести з дому №7 на дім №8 (на №7 вона працює лише на вторинку).</li><li>Мониторити вторинку ПС щомісяця (к-сть лотів, $/м², частка з ремонтом) — цей блок.</li><li>🔶 Керувати власною вторинкою (партнерство з перепродажами / контроль ціни) — рішення забудовника.</li></ul></div>
+
+<p class="provn">Джерела: залишки — CRM G-Plus /units (дім №7 table 2873, дім №8 table 3520). Вторинка — rieltor.ua + OLX (звіт «Вторичка ПС», липень 2026). Ціни asking. Обсяг вторинки directional (8 лотів rieltor + OLX).</p>
+<div class="ft">Первинка vs Вторинка · помісячний моніторинг · маркетинг-платформа ЖК «Парк Совіньйон».</div>
+</main>
+</body></html>

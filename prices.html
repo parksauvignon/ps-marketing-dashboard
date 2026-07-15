@@ -13,6 +13,8 @@ body{font-family:'Proba Pro',system-ui,sans-serif;background:var(--cream);color:
 .hdr b{font-size:15px} .hdr small{display:block;color:var(--gray);font-size:11px;font-weight:500}
 .hdr .r{display:flex;gap:10px;align-items:center}
 .hdr a.back{color:var(--navy);font-weight:700;font-size:13px;text-decoration:none;background:var(--yellow);padding:8px 14px;border-radius:999px}
+.xnav{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-left:auto}.xnav a{color:var(--navy);font-weight:700;font-size:12px;text-decoration:none;background:#fff;border:1px solid var(--line);padding:7px 11px;border-radius:999px;white-space:nowrap}
+@media(max-width:900px){.xnav{order:3;width:100%;margin-left:0;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 0}}
 .msel{position:relative} select{appearance:none;-webkit-appearance:none;background:var(--navy);color:#fff;border:0;border-radius:999px;padding:9px 36px 9px 15px;font:inherit;font-weight:600;font-size:13px;cursor:pointer}
 .msel::after{content:"▾";position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--yellow);pointer-events:none}
 main{max-width:1180px;margin:0 auto;padding:16px 16px 60px}
@@ -82,7 +84,7 @@ table.sum td:first-child{white-space:normal;font-weight:600;font-size:12px}
 .meth b{color:var(--navy)}
 .none{color:var(--gray);font-size:13px}
 </style></head><body>
-<div class="hdr"><div><b>Ціни конкурентів</b><small>первинка Одеси · помісячні знімки цін, акцій та умов</small></div><div class="r"><a class="back" href="index.html">← Дашборд</a><div class="msel"><select id="msel"><option value="2026-07">Липень 2026</option><option value="2026-06">Червень 2026</option><option value="2026-05">Травень 2026</option></select></div></div></div>
+<div class="hdr"><div><b>Ціни конкурентів</b><small>первинка Одеси · помісячні знімки цін, акцій та умов</small></div><nav class="xnav"><a href="index.html">Дашборд</a><a href="strategy.html">Стратегія</a><a href="competitors.html">Конкуренти</a><a href="own_market.html">Первинка/Вторинка</a><a href="experiments.html">Експерименти</a><a href="ceo.html">Звіт CEO</a></nav><div class="r"><div class="msel"><select id="msel"><option value="2026-07">Липень 2026</option><option value="2026-06">Червень 2026</option><option value="2026-05">Травень 2026</option></select></div></div></div>
 <main>
 <div class="mblock" data-m="2026-07">
 <div class="psbar"><div class="psbar-t">Парк Совіньйон — наші ціни</div>
