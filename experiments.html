@@ -61,7 +61,7 @@ tr.hide{display:none}
 <div class="tmpl"><b>Як заповнювати:</b> одна гіпотеза = один рядок у <code>data/experiments.json</code>. Формула гіпотези: «Якщо зробимо <b>X</b>, метрика <b>Y</b> зміниться, бо <b>Z</b>». Метрику успіху й baseline фіксувати <b>ДО</b> старту. Після підсумку — результат + рішення (масштабувати / вбити / ітерувати).</div>
 <div class="filt">
 <div class="msel"><select id="fstatus"><option value="">усі статуси</option><option>активний</option><option>завершено</option><option>запланований</option><option>зупинено</option></select></div>
-<div class="msel"><select id="fchan"><option value="">усі канали</option><option value="Meta / Premium">Meta / Premium</option><option value="Meta / апгрейдер 40+">Meta / апгрейдер 40+</option><option value="Meta / загальна">Meta / загальна</option><option value="Відділ продажу / лендинг">Відділ продажу / лендинг</option></select></div>
+<div class="msel"><select id="fchan"><option value="">усі канали</option><option value="Meta / Premium">Meta / Premium</option><option value="Meta / апгрейдер 40+">Meta / апгрейдер 40+</option><option value="Meta / єОселя">Meta / єОселя</option><option value="Відділ продажу / лендинг">Відділ продажу / лендинг</option></select></div>
 </div>
 <div class="scroll"><table class="ex"><thead><tr>
 <th class="l">ID / період</th><th>Статус</th><th class="l">Канал / сегмент</th><th class="l">Гіпотеза · що змінюємо</th><th class="l">Метрика + baseline</th><th class="l">Результат</th><th>Рішення</th><th class="l">Власник</th>
@@ -74,12 +74,12 @@ tr.hide{display:none}
 <td class="l">— </td>
 <td>—</td>
 <td class="l">—</td>
-</tr><tr data-status="активний" data-channel="Meta / загальна">
+</tr><tr data-status="активний" data-channel="Meta / єОселя">
 <td class="l"><b>EXP-2026-07-02</b><div class="per">2026-07-07 → 2026-07-31</div></td>
 <td><span class="st s-act">активний</span></td>
-<td class="l">Meta / загальна</td>
-<td class="l hyp">Якщо зняти єОселя-№7 з реклами і перевести бюджет на persona A/B, частка цільових лідів зросте, бо єОселя не проходить під чек дому №7.<div class="chgs"><span class="chg">оффер</span> <span class="chg">аудиторія</span></div></td>
-<td class="l">конверсія звонок→цільовий (Meta), base 6% (FB)</td>
+<td class="l">Meta / єОселя</td>
+<td class="l hyp">Якщо перенацілити єОселя-аудиторію на сім'ї 3–4 (2к/3к дім №7, готове житло проходить під програму), частка цільових лідів зросте, бо оффер робочий — ламався таргет, не програма.<div class="chgs"><span class="chg">аудиторія</span></div></td>
+<td class="l">конверсія звонок→цільовий (Meta єОселя), base 0% угод</td>
 <td class="l">— </td>
 <td>—</td>
 <td class="l">—</td>
