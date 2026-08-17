@@ -1,0 +1,347 @@
+/* ============================================================
+   Парк Совіньйон · Маркетинг-платформа
+   Спільний типографічний та кольоровий шар для всіх сторінок.
+   Підключати ПІСЛЯ власного <style> сторінки.
+
+   Система: структура — ProbaPro Medium (500), дані — Bold (600/700).
+   Шкала: геометрична з кроком 1,25 — 12 · 15 · 19 · 24 · 30 + заголовок.
+   Кольори: 5 брендових + два похідних відтінки для тексту,
+            які проходять WCAG AA (заміряно, не на око).
+   ============================================================ */
+
+@font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Bold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+
+:root{
+  /* ── Палітра ── */
+  --olive:#999F4F;          /* заливки, лінійки, графіки — не для тексту */
+  --olive-d:#68702F;        /* оливковий ДЛЯ ТЕКСТУ: 4,9:1 на білому */
+  --yellow:#F0CF4B;         /* тільки заливка, ніколи не колір тексту */
+  --navy:#313746;           /* основний текст: 11,9:1 */
+  --gray:#6A7082;           /* другорядний текст: 4,9:1 на білому, 4,5:1 на кремі */
+  --gray-soft:#767C8D;      /* брендовий сірий — межі, іконки, серії графіків */
+  --cream:#F7F5F2;          /* друга поверхня: шапки таблиць, врізки, hover */
+  --white:#fff;
+
+  /* ── Похідні (лише прозорість брендових) ── */
+  --line:rgba(49,55,70,.11);
+  --line-soft:rgba(49,55,70,.06);
+  --olive-tint:rgba(153,159,79,.12);
+  --shadow:0 1px 2px rgba(49,55,70,.04);
+  --shadow-l:0 8px 28px rgba(49,55,70,.07);
+
+  /* ── Типографічна шкала ──────────────────────────────────
+     Геометрична, крок 1,25. Шість ступенів, більше немає.
+     12 → 15 → 19 → 24 → 30, плюс заголовок сторінки.
+     Кожен ступінь — окрема роль; сусідні розміри на кшталт
+     12,5 чи 13,5 не є ієрархією, вони просто шум. */
+  --fs-xs:12px;                        /* мікрокапс, таблиці, бейджі, контроли */
+  --fs-sm:12px;                        /* синонім для щільних даних */
+  --fs-body:15px;                      /* основний текст, списки, підписи */
+  --fs-lead:clamp(15px,1.5vw,19px);    /* вступний абзац сторінки */
+  --fs-h3:19px;                        /* заголовок картки */
+  --fs-h2:24px;                        /* заголовок секції */
+  --fs-num:clamp(24px,2.6vw,30px);     /* показники */
+  --fs-h1:clamp(30px,3.4vw,44px);      /* назва сторінки */
+
+  /* ── Трекінг та інтерліньяж — теж токени ── */
+  --tr-h1:-.03em;
+  --tr-head:-.018em;
+  --tr-num:-.02em;
+  --tr-caps:.13em;
+  --lh-h1:1.06;
+  --lh-head:1.3;
+  --lh-body:1.6;
+  --lh-tight:1.42;
+
+  --r:16px;
+}
+
+/* ── База ─────────────────────────────────────────────────── */
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Proba Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-weight:400;
+  font-size:var(--fs-body);
+  line-height:var(--lh-body);
+  color:var(--navy);
+  background:var(--white);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  font-feature-settings:"kern" 1;
+}
+/* курсив заборонений брендбуком */
+i,em,cite,address{font-style:normal}
+b,strong{font-weight:600}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--olive-d);outline-offset:2px;border-radius:4px}
+::selection{background:rgba(240,207,75,.42);color:var(--navy)}
+*{scrollbar-color:rgba(153,159,79,.5) rgba(49,55,70,.06)}
+
+/* цифри в даних завжди табличні та з тіснішим трекінгом */
+td,th,.v,.val,.mv,.num,.big,.price,.kpi .v,.k .v,.fhead b{font-variant-numeric:tabular-nums}
+
+/* ── Шапка ────────────────────────────────────────────────── */
+.hdr,.bar{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(1.6) blur(14px);
+  -webkit-backdrop-filter:saturate(1.6) blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.brand,.bar b{
+  font-size:var(--fs-body);
+  font-weight:600;
+  letter-spacing:var(--tr-head);
+  line-height:1.3;
+}
+.brand small{
+  display:block;
+  font-size:var(--fs-xs);
+  font-weight:400;
+  letter-spacing:0;
+  color:var(--gray);
+  line-height:1.35;
+  margin-top:1px;
+}
+.hlink,.xnav a{
+  font-size:var(--fs-xs);
+  font-weight:500;
+  letter-spacing:.005em;
+  color:var(--navy);
+  background:transparent;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:7px 13px;
+  line-height:1;
+  text-decoration:none;
+  transition:background .18s ease,border-color .18s ease,color .18s ease;
+}
+.hlink:hover:not(.on):not(.active),.xnav a:hover:not(.on):not(.active){background:var(--cream);border-color:rgba(49,55,70,.2)}
+.hlink.on,.hlink.active,.xnav a.on,.xnav a.active{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* ── Назва сторінки ───────────────────────────────────────── */
+.ptitle,main>h1,.page>h1,.lead h1{
+  font-size:var(--fs-h1);
+  font-weight:500;
+  line-height:var(--lh-h1);
+  letter-spacing:var(--tr-h1);
+  color:inherit;           /* на темних блоках заголовок успадковує світлий колір */
+  max-width:20ch;
+  text-wrap:balance;
+  margin:26px 0 0;
+}
+.ptitle{color:var(--navy)}
+.ptitle+.sub,main>h1+.sub,.page>h1+.sub,.ptitle+.meta{
+  font-size:var(--fs-lead);
+  line-height:var(--lh-body);
+  color:var(--gray);
+  max-width:68ch;
+  margin:18px 2px 30px;
+  text-wrap:pretty;
+}
+
+/* ── Секційні заголовки ───────────────────────────────────── */
+.band,h2.band,.band2,h2.band2,.band3,h2.band3{
+  font-size:var(--fs-h2);
+  font-weight:500;
+  line-height:var(--lh-head);
+  letter-spacing:var(--tr-head);
+  color:var(--navy);
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin:46px 2px 14px;
+  padding:0;
+}
+/* фірмова риска перед заголовком — як на лендінгу */
+.band::before,h2.band::before,.band2::before,h2.band2::before,.band3::before,h2.band3::before{
+  content:"";
+  flex:0 0 auto;
+  width:24px;
+  height:1px;
+  background:var(--olive);
+}
+.band small,h2.band small,.band2 small,.band3 small{
+  font-size:var(--fs-xs);
+  font-weight:400;
+  letter-spacing:0;
+  color:var(--gray);
+}
+/* нумерація секцій: цифра замість кольорового квадрата */
+.band .ic,h2.band .ic,.band2 .ic,.band3 .ic{
+  background:none!important;
+  color:var(--gray)!important;
+  width:auto!important;
+  min-width:0!important;
+  height:auto!important;
+  border-radius:0!important;
+  font-size:var(--fs-xs)!important;
+  font-weight:600;
+  letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;
+}
+.band .ic:empty,h2.band .ic:empty,.band3 .ic:empty{display:none}
+/* лічильник об'єктів у зоні — це кількість, а не номер розділу */
+.zcnt{
+  font-size:var(--fs-xs);
+  font-weight:500;
+  letter-spacing:.02em;
+  color:var(--gray);
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+
+/* ── Картки ───────────────────────────────────────────────── */
+.card,.chart-card,.kpi,.mc,.track{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  min-width:0;            /* інакше широка таблиця всередині розпирає картку */
+}
+/* смуги прокрутки для щільних таблиць мають лишатися всередині картки */
+.scroll,.atbl,.stepwrap,.tblwrap{max-width:100%}
+/* Кольорова смуга збоку картки — найпомітніша ознака «згенерованого» UI.
+   Там, де колір несе сенс (рівень, категорія), лишаємо його крапкою, а не смугою. */
+.mc::before{display:none}
+.mc .mm::before{
+  content:"";
+  display:inline-block;
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--lvl,var(--gray-soft));
+  margin-right:7px;
+  vertical-align:1px;
+}
+.note,.es,.hl,.lvl,.death .d,.callout{border-left-width:1px}
+.zlab,.tag,.pill,.chip{box-shadow:none}
+.card h3,.chart-card h3,.card h4,.persona h3{
+  font-size:var(--fs-h3);
+  font-weight:500;
+  line-height:var(--lh-head);
+  letter-spacing:var(--tr-head);
+  color:var(--navy);
+  margin-bottom:3px;
+}
+.chart-card .h-sub,.card .h-sub{
+  font-size:var(--fs-body);
+  font-weight:400;
+  color:var(--gray);
+  line-height:1.5;
+  margin-bottom:12px;
+}
+
+/* ── Показники ────────────────────────────────────────────── */
+.kpi .val,.kpi .v,.k .v,.mc .mv,.tracker .big,.shelf .price,.big{
+  font-size:var(--fs-num);
+  font-weight:600;
+  line-height:1.04;
+  letter-spacing:var(--tr-num);
+  font-variant-numeric:tabular-nums;
+}
+.kpi .val small,.kpi .v small,.k .v small,.mc .mv span,.shelf .price small{
+  font-size:var(--fs-xs);
+  font-weight:500;
+  letter-spacing:0;
+  color:var(--gray);
+}
+/* Мікрокапс — тільки для КОРОТКИХ назв показників.
+   Речення в капсі не читаються: капс прибирає силует слова. */
+.kpi .lab,.k .l,.mc .mm{
+  font-size:var(--fs-xs);
+  font-weight:500;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--gray);
+  line-height:1.35;
+  text-wrap:balance;
+}
+/* .kpi .l на «Стратегії» та «Первинці/Вторинці» — це опис, а не назва */
+.kpi .l{
+  font-size:var(--fs-body);
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--gray);
+  line-height:1.45;
+  text-wrap:pretty;
+}
+.kpi .sub,.mc li,.fs-h,.flegend{
+  font-size:var(--fs-body);
+  color:var(--gray);
+}
+
+/* ── Підписи та виноски ───────────────────────────────────── */
+.cap,.src,.note-sm,.provn,.ft,.ftr{
+  font-size:var(--fs-body);
+  line-height:1.55;
+  color:var(--gray);
+}
+.cap b,.note b{color:var(--navy);font-weight:600}
+.ft,.ftr{margin-top:48px;padding-top:18px;border-top:1px solid var(--line-soft);text-align:center}
+
+/* ── Таблиці ──────────────────────────────────────────────── */
+table{font-size:var(--fs-xs);line-height:var(--lh-tight)}
+/* Шапки таблиць — Medium у другорядному тоні. Без капсу:
+   заголовки колонок українською часто довгі, капс на них не читається. */
+th{
+  font-size:var(--fs-xs);
+  font-weight:500;
+  letter-spacing:.02em;
+  text-transform:none;
+  color:var(--gray);
+  text-align:left;
+}
+td{font-variant-numeric:tabular-nums}
+
+/* ── Бейджі та чипи ───────────────────────────────────────── */
+.tag,.pill,.chip,.obadge,.flag,.fbtn .n{
+  font-size:var(--fs-xs);
+  font-weight:500;
+  letter-spacing:.04em;
+  line-height:1.4;
+}
+.tag,.pill{border-radius:999px;padding:3px 10px}
+
+/* ── Темні панелі: світлий текст потребує компенсації ─────── */
+.ins,.utp{
+  background:var(--navy);
+  border-radius:var(--r);
+}
+.ins li,.utp .big,.ins .t{letter-spacing:.004em}
+.ins li{font-size:var(--fs-body);line-height:1.55}
+.ins .t{
+  font-size:var(--fs-xs);
+  font-weight:500;
+  letter-spacing:var(--tr-caps);
+  text-transform:uppercase;
+  color:var(--yellow);
+}
+.utp .big{font-size:var(--fs-h2);font-weight:500;line-height:var(--lh-head);letter-spacing:var(--tr-head)}
+
+/* ── Звіт CEO: сторінка-документ ──────────────────────────── */
+.page{background:var(--white)}
+.page h2{
+  font-size:var(--fs-h2);
+  font-weight:500;
+  letter-spacing:var(--tr-head);
+  line-height:var(--lh-head);
+  border-bottom:0;
+  padding-bottom:0;
+  margin:44px 0 12px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+.page h2::before{content:"";flex:0 0 auto;width:24px;height:1px;background:var(--olive)}
+.page h3{font-size:var(--fs-h3);font-weight:500;letter-spacing:var(--tr-head)}
+
+/* ── Друк ─────────────────────────────────────────────────── */
+@media print{
+  .hdr,.bar,.hnav,.xnav{position:static;background:#fff}
+  body{background:#fff}
+  .card,.chart-card,.kpi,.mc{box-shadow:none}
+}

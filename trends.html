@@ -8,21 +8,21 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Proba Pro',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--cream);color:var(--navy);-webkit-font-smoothing:antialiased;line-height:1.4}
 .hdr{position:sticky;top:0;z-index:20;background:rgba(247,245,242,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.brand{font-weight:700;font-size:15px;line-height:1.15}.brand small{display:block;color:var(--gray);font-size:11px;font-weight:500}
+.brand{font-weight:700;font-size:15px;line-height:1.32}.brand small{display:block;color:var(--gray);font-size:12px;font-weight:500}
 .hnav{display:flex;gap:7px;align-items:center;margin-left:auto}
-.hlink{color:var(--navy);font-weight:700;font-size:12.5px;text-decoration:none;background:#fff;border:1px solid var(--line);padding:8px 13px;border-radius:999px;white-space:nowrap;line-height:1}
+.hlink{color:var(--navy);font-weight:700;font-size:12px;text-decoration:none;background:#fff;border:1px solid var(--line);padding:8px 13px;border-radius:999px;white-space:nowrap;line-height:1}
 .hlink.on{background:var(--yellow);border-color:transparent}
 @media(max-width:980px){.hnav{order:3;width:100%;margin-left:0;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 0 4px}}
 main{max-width:1180px;margin:0 auto;padding:16px 16px 60px}
-.sub{color:var(--gray);font-size:13px;margin:2px 2px 6px;max-width:820px;line-height:1.55}
+.sub{color:var(--gray);font-size:15px;margin:2px 2px 6px;max-width:820px;line-height:1.55}
 .band{display:flex;align-items:center;gap:9px;margin:30px 2px 13px;font-size:15px;font-weight:700}
 .band .ic{width:24px;height:24px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex:0 0 auto}
 .band small{font-weight:600;color:var(--gray);font-size:12px}
 .grid{display:grid;grid-template-columns:1fr;gap:12px}.grid>*{min-width:0}
 @media(min-width:820px){.grid.two{grid-template-columns:1fr 1fr}}
 .chart-card{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow)}
-.chart-card h3{font-size:14.5px;font-weight:700;margin-bottom:2px}
-.chart-card .h-sub{font-size:11.5px;color:var(--gray);margin-bottom:10px}
+.chart-card h3{font-size:15px;font-weight:700;margin-bottom:2px}
+.chart-card .h-sub{font-size:12px;color:var(--gray);margin-bottom:10px}
 .cwrap{position:relative;height:250px}
 @media(min-width:820px){.cwrap.tall{height:300px}}
 .cap{margin-top:10px;font-size:12px;color:var(--gray);line-height:1.55;border-top:1px solid var(--line);padding-top:9px}.cap b{color:var(--navy)}
@@ -30,35 +30,36 @@ main{max-width:1180px;margin:0 auto;padding:16px 16px 60px}
 @media(min-width:640px){.mcards{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:1000px){.mcards{grid-template-columns:repeat(5,1fr)}}
 .mc{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 14px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.mc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--lvl,var(--gray))}
-.mc .mm{font-size:11.5px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
-.mc .mv{font-size:27px;font-weight:700;letter-spacing:-.6px;margin:3px 0 0;font-variant-numeric:tabular-nums}
-.mc .mv span{font-size:11.5px;font-weight:600;color:var(--gray);margin-left:4px}
+.mc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--lvl,var(--gray))}
+.mc .mm{font-size:12px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.mc .mv{font-size:30px;font-weight:700;letter-spacing:-.6px;margin:3px 0 0;font-variant-numeric:tabular-nums}
+.mc .mv span{font-size:12px;font-weight:600;color:var(--gray);margin-left:4px}
 .mc ul{list-style:none;margin-top:8px;border-top:1px solid var(--line);padding-top:7px}
-.mc li{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;color:var(--gray);padding:2px 0}
+.mc li{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--gray);padding:2px 0}
 .mc li b{color:var(--navy);font-variant-numeric:tabular-nums}
-.note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--yellow);border-radius:12px;padding:14px 16px;font-size:13px;line-height:1.6;box-shadow:var(--shadow)}
+.note{background:#fff;border:1px solid var(--line);border-left:1px solid var(--yellow);border-radius:12px;padding:14px 16px;font-size:15px;line-height:1.6;box-shadow:var(--shadow)}
 .note b{font-weight:700}
 .note ul li{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:4px 0;border-bottom:1px dashed rgba(49,55,70,.09)}
 .note ul li:last-child{border-bottom:0}
 .note ul li span{color:var(--gray)}
 .note ul li b{white-space:nowrap;font-variant-numeric:tabular-nums}
-.tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;border-radius:999px;padding:3px 9px;margin-right:6px;vertical-align:1px}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;border-radius:999px;padding:3px 9px;margin-right:6px;vertical-align:1px}
 .t-fact{background:rgba(153,159,79,.18);color:var(--olive-d)}.t-hyp{background:rgba(240,207,75,.28);color:#8a6d00}
 .ftr{margin-top:32px;text-align:center;color:var(--gray);font-size:12px;line-height:1.6}
-</style></head><body>
+</style>
+<link rel="stylesheet" href="ps.css"></head><body>
 <div class="hdr"><div class="brand">Парк Совіньйон<small>Динаміка ключових показників по місяцях</small></div><nav class="hnav"><a class="hlink" href="index.html">Дашборд</a><a class="hlink on" href="trends.html">Динаміка</a><a class="hlink" href="strategy.html">Стратегія</a><a class="hlink" href="competitors.html">Конкуренти</a><a class="hlink" href="prices.html">Ціни</a><a class="hlink" href="own_market.html">Первинка/Вторинка</a><a class="hlink" href="experiments.html">Експерименти</a><a class="hlink" href="ceo.html">Звіт CEO</a></nav></div>
-<main>
+<main><h1 class="ptitle">Динаміка по місяцях</h1>
 <p class="sub">Один екран для порівняння місяців: скільки витратили, скільки звернень і якої якості отримали, скільки коштує кожне звернення. Період: <b>Листопад 2025 — Липень 2026</b>. Поточний (незакритий) місяць не показуємо. Усі витрати — <b>з ПДВ 20%</b>, як у рахунках.</p>
 
-<div class="band"><span class="ic" style="background:var(--navy)">₴</span>Витрати на рекламу</div>
+<h2 class="band"><span class="ic" style="background:var(--navy)"></span>Витрати на рекламу</h2>
 <div class="grid"><div class="chart-card">
 <h3>Рекламні витрати по місяцях</h3><div class="h-sub">Meta та Google Ads окремо, лінією — загальний бюджет. Гривні, з ПДВ.</div>
 <div class="cwrap tall"><canvas id="cSpend"></canvas></div>
 <div class="cap">Джерело: кабінети Meta та Google Ads (витрати без ПДВ) × 1,2 — так виходить сума, яку реально бачимо в рахунках.</div>
 </div></div>
 
-<div class="band"><span class="ic" style="background:var(--olive)">L</span>Звернення та їх якість</div>
+<h2 class="band"><span class="ic" style="background:var(--olive)"></span>Звернення та їх якість</h2>
 <div class="grid"><div class="chart-card">
 <h3>Усі звернення та цільові — всі канали разом</h3><div class="h-sub">Усе, що потрапило в CRM за місяць (реклама + дзвінки + візити), і скільки з цього цільових.</div>
 <div class="cwrap tall"><canvas id="cAll"></canvas></div>
@@ -78,7 +79,7 @@ main{max-width:1180px;margin:0 auto;padding:16px 16px 60px}
 <div class="cap">Саме тут історично народжується більшість угод — тому дивимось окремо від реклами.</div>
 </div></div>
 
-<div class="band"><span class="ic" style="background:var(--meta)">$</span>Скільки коштує звернення</div>
+<h2 class="band"><span class="ic" style="background:var(--meta)"></span>Скільки коштує звернення</h2>
 <div class="grid two">
 <div class="chart-card"><h3>Meta: вартість ліда та цільового ліда</h3><div class="h-sub">Гривні з ПДВ. Ціль по CPL — до 540 ₴.</div>
 <div class="cwrap tall"><canvas id="cCpl"></canvas></div>
@@ -88,7 +89,7 @@ main{max-width:1180px;margin:0 auto;padding:16px 16px 60px}
 <div class="cap">Знаменник — увесь бюджет Google Ads за місяць, тож «вартість дзвінка» і «вартість форми» рахуються кожна від повного бюджету (звичайна cost-per-X). Пунктирна лінія — бюджет ÷ (дзвінки + форми), без подвійного рахунку.</div></div>
 </div>
 
-<div class="band"><span class="ic" style="background:var(--red)">!</span>Безпекове тло Одеси <small>перевірка гіпотези «тривоги гасять попит»</small></div>
+<h2 class="band"><span class="ic" style="background:var(--red)"></span>Безпекове тло Одеси <small>перевірка гіпотези «тривоги гасять попит»</small></h2>
 <p class="sub">Для кожного місяця — скільки було повітряних тривог у Одеському районі (у нього входять і місто, і Совіньйон), скільки годин вони тривали та скільки разів канал повідомляв про загрозу й прильоти по місту. Збиті цілі <b>не рахуються</b> — лише оголошені тривоги, повідомлення про летять і про влучання.<br>
 Кількість повідомлень залежить ще й від активності самого каналу (у травні–червні він публікував помітно менше), тож як міру інтенсивності атак надійніші <b>тривоги</b>, <b>години під тривогою</b> і <b>дні з прильотами</b>, а не кількість постів.</p>
 <div class="mcards"><div class="mc" style="--lvl:#c0392b"><div class="mm">Листопад 2025</div><div class="mv">236<span>тривог</span></div><ul><li><span>Годин під тривогою</span><b>309</b></li><li><span>З них нічних (22–06)</span><b>98</b></li><li><span>Середня тривалість</span><b>79 хв</b></li><li><span>Повідомл. про загрозу місту</span><b>140</b></li><li><span>Повідомл. про прильоти</span><b>45</b></li><li><span>Днів з прильотами</span><b>13</b></li></ul></div><div class="mc" style="--lvl:#c0392b"><div class="mm">Грудень 2025</div><div class="mv">254<span>тривог</span></div><ul><li><span>Годин під тривогою</span><b>383</b></li><li><span>З них нічних (22–06)</span><b>94</b></li><li><span>Середня тривалість</span><b>91 хв</b></li><li><span>Повідомл. про загрозу місту</span><b>138</b></li><li><span>Повідомл. про прильоти</span><b>94</b></li><li><span>Днів з прильотами</span><b>22</b></li></ul></div><div class="mc" style="--lvl:#e08a2e"><div class="mm">Січень 2026</div><div class="mv">164<span>тривог</span></div><ul><li><span>Годин під тривогою</span><b>126</b></li><li><span>З них нічних (22–06)</span><b>57</b></li><li><span>Середня тривалість</span><b>46 хв</b></li><li><span>Повідомл. про загрозу місту</span><b>78</b></li><li><span>Повідомл. про прильоти</span><b>47</b></li><li><span>Днів з прильотами</span><b>18</b></li></ul></div><div class="mc" style="--lvl:#999F4F"><div class="mm">Лютий 2026</div><div class="mv">80<span>тривог</span></div><ul><li><span>Годин під тривогою</span><b>66</b></li><li><span>З них нічних (22–06)</span><b>32</b></li><li><span>Середня тривалість</span><b>49 хв</b></li><li><span>Повідомл. про загрозу місту</span><b>46</b></li><li><span>Повідомл. про прильоти</span><b>32</b></li><li><span>Днів з прильотами</span><b>16</b></li></ul></div><div class="mc" style="--lvl:#e08a2e"><div class="mm">Березень 2026</div><div class="mv">134<span>тривог</span></div><ul><li><span>Годин під тривогою</span><b>104</b></li><li><span>З них нічних (22–06)</span><b>38</b></li><li><span>Середня тривалість</span><b>46 хв</b></li><li><span>Повідомл. про загрозу місту</span><b>94</b></li><li><span>Повідомл. про прильоти</span><b>46</b></li><li><span>Днів з прильотами</span><b>18</b></li></ul></div><div class="mc" style="--lvl:#e08a2e"><div class="mm">Квітень 2026</div><div class="mv">132<span>тривог</span></div><ul><li><span>Годин під тривогою</span><b>89</b></li><li><span>З них нічних (22–06)</span><b>50</b></li><li><span>Середня тривалість</span><b>41 хв</b></li><li><span>Повідомл. про загрозу місту</span><b>67</b></li><li><span>Повідомл. про прильоти</span><b>47</b></li><li><span>Днів з прильотами</span><b>15</b></li></ul></div><div class="mc" style="--lvl:#e08a2e"><div class="mm">Травень 2026</div><div class="mv">106<span>тривог</span></div><ul><li><span>Годин під тривогою</span><b>79</b></li><li><span>З них нічних (22–06)</span><b>43</b></li><li><span>Середня тривалість</span><b>45 хв</b></li><li><span>Повідомл. про загрозу місту</span><b>28</b></li><li><span>Повідомл. про прильоти</span><b>26</b></li><li><span>Днів з прильотами</span><b>12</b></li></ul></div><div class="mc" style="--lvl:#e08a2e"><div class="mm">Червень 2026</div><div class="mv">134<span>тривог</span></div><ul><li><span>Годин під тривогою</span><b>67</b></li><li><span>З них нічних (22–06)</span><b>46</b></li><li><span>Середня тривалість</span><b>30 хв</b></li><li><span>Повідомл. про загрозу місту</span><b>17</b></li><li><span>Повідомл. про прильоти</span><b>28</b></li><li><span>Днів з прильотами</span><b>13</b></li></ul></div><div class="mc" style="--lvl:#c0392b"><div class="mm">Липень 2026</div><div class="mv">232<span>тривог</span></div><ul><li><span>Годин під тривогою</span><b>144</b></li><li><span>З них нічних (22–06)</span><b>61</b></li><li><span>Середня тривалість</span><b>37 хв</b></li><li><span>Повідомл. про загрозу місту</span><b>104</b></li><li><span>Повідомл. про прильоти</span><b>91</b></li><li><span>Днів з прильотами</span><b>25</b></li></ul></div></div>
@@ -98,17 +99,17 @@ main{max-width:1180px;margin:0 auto;padding:16px 16px 60px}
 <div class="cap">Джерела: офіційний датасет сирен (Vadimkin/ukrainian-air-raid-sirens-dataset), рівні «Одеський район» + загальнообласні; публічна історія каналу «Одесса INFO» (t.me/odessa_infonews): повідомлення про загрозу та про прильоти; збиття не рахуються</div>
 </div></div>
 <div class="note" style="margin-top:12px"><span class="tag t-hyp">не підтверджено</span> Прямого звʼязку «більше тривог → менше звернень» <b>у даних немає</b> — ані по місяцях, ані по днях. Помісячна кореляція виглядає від’ємною через третій фактор: у місяці з найбільшою кількістю тривог ми й самі витрачали менше (тривоги ↔ бюджет Meta r = -0,69). Якщо прибрати вплив бюджету, звʼязок зникає. Попит падає не від тривог — його рухає бюджет і якість аудиторій.
-<ul style="list-style:none;margin-top:10px;font-size:12.5px"><li><span>Тривоги ↔ усі звернення</span><b>r = -0,39 · з поправкою на бюджет +0,06</b></li><li><span>Тривоги ↔ ліди Meta</span><b>r = -0,65 · з поправкою на бюджет -0,33</b></li><li><span>Тривоги ↔ цільові ліди</span><b>r = -0,38 · з поправкою на бюджет -0,11</b></li><li><span>Тривоги ↔ бюджет Meta</span><b>r = -0,69</b></li></ul>
+<ul style="list-style:none;margin-top:10px;font-size:15px"><li><span>Тривоги ↔ усі звернення</span><b>r = -0,39 · з поправкою на бюджет +0,06</b></li><li><span>Тривоги ↔ ліди Meta</span><b>r = -0,65 · з поправкою на бюджет -0,33</b></li><li><span>Тривоги ↔ цільові ліди</span><b>r = -0,38 · з поправкою на бюджет -0,11</b></li><li><span>Тривоги ↔ бюджет Meta</span><b>r = -0,69</b></li></ul>
 <div style="color:var(--gray);font-size:12px;margin-top:8px">Кореляція Пірсона по 9 місяцях: −1 = рухаються протилежно, +1 = разом, 0 = звʼязку немає. На 9 точках значущим є лише |r| понад 0,67, тож помісячні числа — це радше напрямок, ніж доказ. «З поправкою на бюджет» — частинна кореляція: що лишається від звʼязку, коли витрати зафіксовані.</div></div>
 <div class="note" style="margin-top:12px">
 <span class="tag t-fact">факт · замір</span> <b>Добова перевірка на 249 днях.</b> Для кожного дня взяли, скільки хвилин тривала тривога, і скільки лід-форм Meta прийшло цього дня на кожні $100 витрат (нормування прибирає вплив бюджету).
-<ul style="list-style:none;margin-top:10px;font-size:12.5px"><li><span>0–79 хв тривог (62 дні)</span><b>10,06 ліда/$100</b></li><li><span>82–176 хв тривог (62 дні)</span><b>9,54 ліда/$100</b></li><li><span>180–328 хв тривог (62 дні)</span><b>9,73 ліда/$100</b></li><li><span>328–1999 хв тривог (63 дні)</span><b>9,82 ліда/$100</b></li>
+<ul style="list-style:none;margin-top:10px;font-size:15px"><li><span>0–79 хв тривог (62 дні)</span><b>10,06 ліда/$100</b></li><li><span>82–176 хв тривог (62 дні)</span><b>9,54 ліда/$100</b></li><li><span>180–328 хв тривог (62 дні)</span><b>9,73 ліда/$100</b></li><li><span>328–1999 хв тривог (63 дні)</span><b>9,82 ліда/$100</b></li>
 <li style="border-top:1px solid var(--line);margin-top:6px;padding-top:6px"><span>Найважчі 10% днів (від 774 хв, 24 дні)</span><b>9,24 ліда/$100</b></li>
 <li><span>Усі інші дні (225)</span><b>9,85 ліда/$100</b></li>
 <li><span>Кореляція «хвилини тривог ↔ ліди на $100»</span><b>r = -0,02 · наступний день -0,01</b></li></ul>
 <div style="color:var(--gray);font-size:12px;margin-top:8px">Різниця між найважчими днями і рештою — -6% при розкиді по днях у рази більшому. Це шум, а не ефект.</div></div>
 
-<div class="ftr">Дані оновлюються разом із дашбордом · зібрано 16.08.2026 17:18<br>Методологія збігається з головним дашбордом: ті самі джерела, ті самі визначення лідів і цільових.</div>
+<div class="ftr">Дані оновлюються разом із дашбордом · зібрано 17.08.2026 09:19<br>Методологія збігається з головним дашбордом: ті самі джерела, ті самі визначення лідів і цільових.</div>
 </main>
 <script>
 Chart.register(ChartDataLabels);
