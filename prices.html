@@ -1177,7 +1177,8 @@ donut('chInst', CH.instCats); donut('chDown', CH.downCats);
 
 // Карта: точні точки ЖК (координати з ЛУН) кольором зони + підписи зон з медіаною місяця + ПС
 const map = L.map('map', {scrollWheelZoom:false}).setView([46.42, 30.72], 11);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {attribution:'© OpenStreetMap · © CARTO', maxZoom: 16}).addTo(map);
+// Підкладка Esri Light Gray (без API-ключа; CARTO light_all віддає заглушку «API KEY REQUIRED»); без шару підписів — він англійською
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {attribution:'Tiles © Esri — Esri, DeLorme, NAVTEQ', maxZoom: 16}).addTo(map);
 const ptM = {};
 CH.pts.forEach(pt => {
   ptM[pt.id] = L.circleMarker(pt.p, {radius: 7, color:'#fff', weight: 2, fillColor: CH.zcol[pt.g], fillOpacity: .95}).addTo(map)
