@@ -1,347 +1,336 @@
 /* ============================================================
-   Парк Совіньйон · Маркетинг-платформа
-   Спільний типографічний та кольоровий шар для всіх сторінок.
-   Підключати ПІСЛЯ власного <style> сторінки.
+   Парк Совіньйон · Маркетинг-платформа · ps.css v2 (листопад 2026)
+   Спільний шар для всіх сторінок: токени, каркас з бічним меню,
+   компоненти (панелі, показники, вкладки, таблиці, плашки-висновки,
+   горизонтальні бари) + сумісність зі старими класами генераторів.
 
-   Система: структура — ProbaPro Medium (500), дані — Bold (600/700).
-   Шкала: геометрична з кроком 1,25 — 12 · 15 · 19 · 24 · 30 + заголовок.
-   Кольори: 5 брендових + два похідних відтінки для тексту,
-            які проходять WCAG AA (заміряно, не на око).
+   Підключається через ui.head() ПЕРЕД власним <style> сторінки.
+   Каркас (бічне меню, верхня смуга) — scripts/ui.py.
    ============================================================ */
 
 @font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
-@font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Bold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
-@font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Proba Pro';src:url('fonts/ProbaPro-Bold.woff2') format('woff2');font-weight:600 800;font-style:normal;font-display:swap}
 
 :root{
-  /* ── Палітра ── */
-  --olive:#999F4F;          /* заливки, лінійки, графіки — не для тексту */
-  --olive-d:#68702F;        /* оливковий ДЛЯ ТЕКСТУ: 4,9:1 на білому */
-  --yellow:#F0CF4B;         /* тільки заливка, ніколи не колір тексту */
-  --navy:#313746;           /* основний текст: 11,9:1 */
-  --gray:#6A7082;           /* другорядний текст: 4,9:1 на білому, 4,5:1 на кремі */
-  --gray-soft:#767C8D;      /* брендовий сірий — межі, іконки, серії графіків */
-  --cream:#F7F5F2;          /* друга поверхня: шапки таблиць, врізки, hover */
+  /* ── Бренд ── */
+  --olive:#999F4F;          /* заливки, графіки, маркери — НЕ текст */
+  --olive-d:#68702F;        /* оливковий для тексту: 4,9:1 на білому */
+  --olive-dd:#4E5523;
+  --olive-t:#EEEFDF;        /* тонований фон оливи */
+  --yellow:#F0CF4B;         /* плашки, підсвітка — НЕ текст */
+  --yellow-t:#FBF3D2;
+  --navy:#313746;           /* основний текст і бічне меню */
+  --navy-2:#3B4254;
+  --gray:#636979;           /* другорядний текст: 5,2:1 на білому, 4,8:1 на кремі */
+  --gray-soft:#767C8D;      /* брендовий сірий: межі, іконки, серії графіків */
+  --gray-3:#A9AEBB;
+  --cream:#F7F5F2;          /* тло контенту */
+  --cream-2:#EFECE6;        /* друга нейтраль: шапки таблиць, hover */
   --white:#fff;
 
-  /* ── Похідні (лише прозорість брендових) ── */
-  --line:rgba(49,55,70,.11);
+  /* ── Семантика ── */
+  --good:#5E7A2E; --good-t:#E9F0DC;
+  --bad:#B4432F;  --bad-t:#F8E4DF;
+  --warn:#9A6B00; --warn-t:#FBF0CF;
+  --ps:var(--olive);        /* ПС у всіх графіках — олива */
+  --mkt:var(--gray-3);      /* ринок / конкуренти — нейтральний сірий */
+
+  --line:rgba(49,55,70,.10);
+  --line-2:rgba(49,55,70,.16);
   --line-soft:rgba(49,55,70,.06);
   --olive-tint:rgba(153,159,79,.12);
-  --shadow:0 1px 2px rgba(49,55,70,.04);
-  --shadow-l:0 8px 28px rgba(49,55,70,.07);
 
-  /* ── Типографічна шкала ──────────────────────────────────
-     Геометрична, крок 1,25. Шість ступенів, більше немає.
-     12 → 15 → 19 → 24 → 30, плюс заголовок сторінки.
-     Кожен ступінь — окрема роль; сусідні розміри на кшталт
-     12,5 чи 13,5 не є ієрархією, вони просто шум. */
-  --fs-xs:12px;                        /* мікрокапс, таблиці, бейджі, контроли */
-  --fs-sm:12px;                        /* синонім для щільних даних */
-  --fs-body:15px;                      /* основний текст, списки, підписи */
-  --fs-lead:clamp(15px,1.5vw,19px);    /* вступний абзац сторінки */
-  --fs-h3:19px;                        /* заголовок картки */
-  --fs-h2:24px;                        /* заголовок секції */
-  --fs-num:clamp(24px,2.6vw,30px);     /* показники */
-  --fs-h1:clamp(30px,3.4vw,44px);      /* назва сторінки */
+  --sh-1:0 1px 2px rgba(49,55,70,.05),0 1px 1px rgba(49,55,70,.03);
+  --sh-2:0 2px 4px rgba(49,55,70,.04),0 10px 24px -6px rgba(49,55,70,.10);
+  --sh-3:0 4px 8px rgba(49,55,70,.05),0 24px 48px -12px rgba(49,55,70,.18);
 
-  /* ── Трекінг та інтерліньяж — теж токени ── */
-  --tr-h1:-.03em;
-  --tr-head:-.018em;
-  --tr-num:-.02em;
-  --tr-caps:.13em;
-  --lh-h1:1.06;
-  --lh-head:1.3;
-  --lh-body:1.6;
-  --lh-tight:1.42;
+  /* ── Типографіка: фіксована шкала для продуктового UI ── */
+  --fs-xs:12px; --fs-sm:13px; --fs-body:15px; --fs-md:17px;
+  --fs-h3:17px; --fs-h2:22px; --fs-h1:28px; --fs-num:30px; --fs-lead:16px;
+  --tr-h1:-.022em; --tr-head:-.014em; --tr-num:-.02em; --tr-caps:.08em;
+  --lh-h1:1.15; --lh-head:1.3; --lh-body:1.55; --lh-tight:1.4;
 
-  --r:16px;
+  --r:14px; --r-s:10px; --r-xs:6px;
+  --side-w:244px;
+  --ease:cubic-bezier(.22,1,.36,1);
 }
 
 /* ── База ─────────────────────────────────────────────────── */
-html{-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:84px}
 body{
+  margin:0;
   font-family:'Proba Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
-  font-weight:400;
-  font-size:var(--fs-body);
-  line-height:var(--lh-body);
-  color:var(--navy);
-  background:var(--white);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  text-rendering:optimizeLegibility;
-  font-feature-settings:"kern" 1;
+  font-weight:400;font-size:var(--fs-body);line-height:var(--lh-body);
+  color:var(--navy);background:var(--cream);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;font-feature-settings:"kern" 1;
 }
-/* курсив заборонений брендбуком */
-i,em,cite,address{font-style:normal}
+body.lock{overflow:hidden}
+i,em,cite,address{font-style:normal}          /* курсив заборонений брендбуком */
 b,strong{font-weight:600}
-a{color:inherit}
+a{color:inherit;text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-color:var(--olive)}
+img{max-width:100%}
 :focus-visible{outline:2px solid var(--olive-d);outline-offset:2px;border-radius:4px}
-::selection{background:rgba(240,207,75,.42);color:var(--navy)}
-*{scrollbar-color:rgba(153,159,79,.5) rgba(49,55,70,.06)}
+::selection{background:rgba(240,207,75,.5);color:var(--navy)}
+*{scrollbar-color:rgba(118,124,141,.45) transparent;scrollbar-width:thin}
+td,th,.num,.kpi-v,.v,.val,.mv,.big,.price{font-variant-numeric:tabular-nums}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:var(--yellow);color:var(--navy);padding:10px 14px;font-weight:600;text-decoration:none}
+.skip:focus{top:12px}
 
-/* цифри в даних завжди табличні та з тіснішим трекінгом */
-td,th,.v,.val,.mv,.num,.big,.price,.kpi .v,.k .v,.fhead b{font-variant-numeric:tabular-nums}
+/* ── Каркас: бічне меню + основна область ─────────────────── */
+.app{display:grid;grid-template-columns:var(--side-w) minmax(0,1fr);min-height:100vh}
+.side{
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  background:var(--navy);color:#E9EAEE;
+  display:flex;flex-direction:column;padding:22px 14px 18px;
+  /* великі листки паттерну — тільки в нижньому куті, 10% як у брендбуку */
+  background-image:radial-gradient(120% 60% at 0% 100%,rgba(153,159,79,.16),transparent 60%);
+}
+.side-logo{display:block;padding:2px 10px 0}
+.side-logo img{display:block;width:150px;height:auto}
+.side-cap{font-size:var(--fs-xs);color:#A3A8B6;padding:10px 10px 0;letter-spacing:.01em}
+.side-nav{margin-top:22px;display:flex;flex-direction:column;gap:18px}
+.nv-gt{font-size:11px;font-weight:600;letter-spacing:var(--tr-caps);text-transform:uppercase;color:#8E94A4;padding:0 10px 6px}
+.nv{
+  display:flex;align-items:center;gap:11px;
+  padding:9px 10px;border-radius:9px;margin:1px 0;
+  color:#D5D8DF;text-decoration:none;font-size:14.5px;font-weight:500;line-height:1.2;
+  transition:background .18s var(--ease),color .18s var(--ease);
+}
+.nv .ic{flex:0 0 auto;color:#8E94A4;transition:color .18s var(--ease)}
+.nv:hover{background:rgba(255,255,255,.06);color:#fff}
+.nv:hover .ic{color:#C9CDD6}
+.nv.on{background:rgba(255,255,255,.09);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.nv.on .ic{color:var(--yellow)}
+.nv:focus-visible{outline-color:var(--yellow)}
+.side-ft{margin-top:auto;padding:18px 10px 0;font-size:var(--fs-xs);color:#8E94A4;border-top:1px solid rgba(255,255,255,.07)}
 
-/* ── Шапка ────────────────────────────────────────────────── */
-.hdr,.bar{
-  background:rgba(255,255,255,.92);
-  backdrop-filter:saturate(1.6) blur(14px);
-  -webkit-backdrop-filter:saturate(1.6) blur(14px);
+.main{min-width:0;display:flex;flex-direction:column}
+.top{
+  position:sticky;top:0;z-index:30;
+  display:flex;align-items:center;gap:16px;
+  padding:14px 40px;min-height:68px;
+  background:rgba(247,245,242,.88);
+  -webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px);
   border-bottom:1px solid var(--line);
 }
-.brand,.bar b{
-  font-size:var(--fs-body);
-  font-weight:600;
-  letter-spacing:var(--tr-head);
-  line-height:1.3;
-}
-.brand small{
-  display:block;
-  font-size:var(--fs-xs);
-  font-weight:400;
-  letter-spacing:0;
-  color:var(--gray);
-  line-height:1.35;
-  margin-top:1px;
-}
-.hlink,.xnav a{
-  font-size:var(--fs-xs);
-  font-weight:500;
-  letter-spacing:.005em;
-  color:var(--navy);
-  background:transparent;
-  border:1px solid var(--line);
-  border-radius:999px;
-  padding:7px 13px;
-  line-height:1;
-  text-decoration:none;
-  transition:background .18s ease,border-color .18s ease,color .18s ease;
-}
-.hlink:hover:not(.on):not(.active),.xnav a:hover:not(.on):not(.active){background:var(--cream);border-color:rgba(49,55,70,.2)}
-.hlink.on,.hlink.active,.xnav a.on,.xnav a.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.top-t{min-width:0}
+.top-h{margin:0;font-size:19px;font-weight:500;letter-spacing:var(--tr-head);line-height:1.25}
+.top-sub{margin:1px 0 0;font-size:var(--fs-sm);color:var(--gray);line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-r{margin-left:auto;display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.burger{display:none;background:none;border:0;padding:8px;margin:-8px 0 -8px -8px;color:var(--navy);cursor:pointer;border-radius:8px}
+.scrim{position:fixed;inset:0;background:rgba(30,34,44,.45);z-index:40}
 
-/* ── Назва сторінки ───────────────────────────────────────── */
-.ptitle,main>h1,.page>h1,.lead h1{
-  font-size:var(--fs-h1);
-  font-weight:500;
-  line-height:var(--lh-h1);
-  letter-spacing:var(--tr-h1);
-  color:inherit;           /* на темних блоках заголовок успадковує світлий колір */
-  max-width:20ch;
-  text-wrap:balance;
-  margin:26px 0 0;
+@media (max-width:1023px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:fixed;left:0;top:0;bottom:0;width:272px;z-index:50;transform:translateX(-100%);transition:transform .26s var(--ease);box-shadow:var(--sh-3)}
+  .side.open{transform:none}
+  .burger{display:inline-flex}
+  .top{padding:10px 16px;min-height:60px;gap:10px}
+  .top-sub{display:none}
 }
-.ptitle{color:var(--navy)}
-.ptitle+.sub,main>h1+.sub,.page>h1+.sub,.ptitle+.meta{
-  font-size:var(--fs-lead);
-  line-height:var(--lh-body);
-  color:var(--gray);
-  max-width:68ch;
-  margin:18px 2px 30px;
-  text-wrap:pretty;
-}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0s!important;animation-duration:0s!important}}
 
-/* ── Секційні заголовки ───────────────────────────────────── */
-.band,h2.band,.band2,h2.band2,.band3,h2.band3{
-  font-size:var(--fs-h2);
-  font-weight:500;
-  line-height:var(--lh-head);
-  letter-spacing:var(--tr-head);
-  color:var(--navy);
-  display:flex;
-  align-items:center;
-  gap:11px;
-  margin:46px 2px 14px;
-  padding:0;
-}
-/* фірмова риска перед заголовком — як на лендінгу */
-.band::before,h2.band::before,.band2::before,h2.band2::before,.band3::before,h2.band3::before{
-  content:"";
-  flex:0 0 auto;
-  width:24px;
-  height:1px;
-  background:var(--olive);
-}
-.band small,h2.band small,.band2 small,.band3 small{
-  font-size:var(--fs-xs);
-  font-weight:400;
-  letter-spacing:0;
-  color:var(--gray);
-}
-/* нумерація секцій: цифра замість кольорового квадрата */
-.band .ic,h2.band .ic,.band2 .ic,.band3 .ic{
-  background:none!important;
-  color:var(--gray)!important;
-  width:auto!important;
-  min-width:0!important;
-  height:auto!important;
-  border-radius:0!important;
-  font-size:var(--fs-xs)!important;
-  font-weight:600;
-  letter-spacing:.02em;
-  font-variant-numeric:tabular-nums;
-}
-.band .ic:empty,h2.band .ic:empty,.band3 .ic:empty{display:none}
-/* лічильник об'єктів у зоні — це кількість, а не номер розділу */
-.zcnt{
-  font-size:var(--fs-xs);
-  font-weight:500;
-  letter-spacing:.02em;
-  color:var(--gray);
-  font-variant-numeric:tabular-nums;
-  white-space:nowrap;
-}
+/* ── Контент сторінки ─────────────────────────────────────── */
+.pg{width:100%;max-width:1320px;padding:28px 40px 72px;margin:0}
+@media (max-width:1023px){.pg{padding:20px 16px 56px}}
+.lede{font-size:var(--fs-lead);color:var(--gray);max-width:76ch;margin:0 0 24px;text-wrap:pretty}
+.lede b{color:var(--navy)}
 
-/* ── Картки ───────────────────────────────────────────────── */
-.card,.chart-card,.kpi,.mc,.track{
-  background:var(--white);
-  border:1px solid var(--line);
-  border-radius:var(--r);
-  box-shadow:var(--shadow);
-  min-width:0;            /* інакше широка таблиця всередині розпирає картку */
-}
-/* смуги прокрутки для щільних таблиць мають лишатися всередині картки */
-.scroll,.atbl,.stepwrap,.tblwrap{max-width:100%}
-/* Кольорова смуга збоку картки — найпомітніша ознака «згенерованого» UI.
-   Там, де колір несе сенс (рівень, категорія), лишаємо його крапкою, а не смугою. */
-.mc::before{display:none}
-.mc .mm::before{
-  content:"";
-  display:inline-block;
-  width:7px;height:7px;
-  border-radius:50%;
-  background:var(--lvl,var(--gray-soft));
-  margin-right:7px;
-  vertical-align:1px;
-}
-.note,.es,.hl,.lvl,.death .d,.callout{border-left-width:1px}
-.zlab,.tag,.pill,.chip{box-shadow:none}
-.card h3,.chart-card h3,.card h4,.persona h3{
-  font-size:var(--fs-h3);
-  font-weight:500;
-  line-height:var(--lh-head);
-  letter-spacing:var(--tr-head);
-  color:var(--navy);
-  margin-bottom:3px;
-}
-.chart-card .h-sub,.card .h-sub{
-  font-size:var(--fs-body);
-  font-weight:400;
-  color:var(--gray);
-  line-height:1.5;
-  margin-bottom:12px;
-}
+/* Секція: більше простору над заголовком, ніж під ним */
+.sec{margin-top:52px}
+.sec:first-child{margin-top:0}
+.sec-h{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.sec-h h2{margin:0;font-size:var(--fs-h2);font-weight:500;letter-spacing:var(--tr-head);line-height:var(--lh-head)}
+.sec-h p,.sec-d{margin:4px 0 0;color:var(--gray);font-size:var(--fs-body);max-width:80ch;text-wrap:pretty}
+.sec-h .sec-r{margin-left:auto}
+.sec-tt{flex:1 1 420px;min-width:0}
+
+/* Панель — базовий білий контейнер. Не вкладати панель у панель. */
+.panel{background:var(--white);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-1);padding:20px 22px;min-width:0}
+.panel-h{margin:0 0 2px;font-size:var(--fs-h3);font-weight:500;letter-spacing:var(--tr-head);line-height:var(--lh-head)}
+.panel-s{margin:0 0 14px;color:var(--gray);font-size:var(--fs-sm)}
+.panel.flat{box-shadow:none}
+.panel.tint{background:var(--olive-t);border-color:rgba(153,159,79,.28);box-shadow:none}
+.panel.dark{background:var(--navy);color:#EEF0F3;border-color:transparent}
+.panel.dark .panel-s{color:#AEB3C0}
+@media (max-width:640px){.panel{padding:16px}}
+
+.grid2,.grid3,.grid4{display:grid;gap:16px}
+@media (min-width:760px){.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* ── Головне: висновки першого екрана ─────────────────────── */
+.takeaways{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.tk{position:relative;background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px 18px;box-shadow:var(--sh-1);display:flex;flex-direction:column;gap:6px}
+.tk-v{font-size:var(--fs-num);font-weight:500;letter-spacing:var(--tr-num);line-height:1.05;font-variant-numeric:tabular-nums}
+.tk-v small{font-size:var(--fs-sm);font-weight:500;color:var(--gray);letter-spacing:0;margin-left:3px}
+.tk-t{font-size:var(--fs-body);line-height:1.45;color:var(--navy);text-wrap:pretty}
+.tk-s{font-size:var(--fs-xs);color:var(--gray)}
+.tk.hl{background:var(--yellow);border-color:transparent;border-radius:0}   /* жовта плашка — прямі кути */
+.tk.hl .tk-s{color:#5F5321}
+.tk.ps{background:var(--olive-t);border-color:rgba(153,159,79,.3)}
+
+/* Плашка-висновок (жовта, прямі кути) */
+.plaque{background:var(--yellow-t);border:1px solid rgba(240,207,75,.7);padding:14px 18px;font-size:var(--fs-body);line-height:1.5;margin-top:14px;text-wrap:pretty}
+.plaque b:first-child{margin-right:4px}
+.plaque.solid{background:var(--yellow);border-color:var(--yellow)}
 
 /* ── Показники ────────────────────────────────────────────── */
-.kpi .val,.kpi .v,.k .v,.mc .mv,.tracker .big,.shelf .price,.big{
-  font-size:var(--fs-num);
-  font-weight:600;
-  line-height:1.04;
-  letter-spacing:var(--tr-num);
-  font-variant-numeric:tabular-nums;
-}
-.kpi .val small,.kpi .v small,.k .v small,.mc .mv span,.shelf .price small{
-  font-size:var(--fs-xs);
-  font-weight:500;
-  letter-spacing:0;
-  color:var(--gray);
-}
-/* Мікрокапс — тільки для КОРОТКИХ назв показників.
-   Речення в капсі не читаються: капс прибирає силует слова. */
-.kpi .lab,.k .l,.mc .mm{
-  font-size:var(--fs-xs);
-  font-weight:500;
-  letter-spacing:.09em;
-  text-transform:uppercase;
-  color:var(--gray);
-  line-height:1.35;
-  text-wrap:balance;
-}
-/* .kpi .l на «Стратегії» та «Первинці/Вторинці» — це опис, а не назва */
-.kpi .l{
-  font-size:var(--fs-body);
-  font-weight:400;
-  letter-spacing:0;
-  text-transform:none;
-  color:var(--gray);
-  line-height:1.45;
-  text-wrap:pretty;
-}
-.kpi .sub,.mc li,.fs-h,.flegend{
-  font-size:var(--fs-body);
-  color:var(--gray);
-}
+.kpis{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.kpi{background:var(--white);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-1);padding:16px 18px;min-width:0}
+.kpi-l{font-size:var(--fs-sm);color:var(--gray);font-weight:500;line-height:1.3}
+.kpi-v{font-size:var(--fs-num);font-weight:500;letter-spacing:var(--tr-num);line-height:1.1;margin-top:6px}
+.kpi-v small{font-size:var(--fs-sm);color:var(--gray);font-weight:500;letter-spacing:0;margin-left:3px}
+.kpi-d{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:var(--fs-xs);color:var(--gray)}
 
-/* ── Підписи та виноски ───────────────────────────────────── */
-.cap,.src,.note-sm,.provn,.ft,.ftr{
-  font-size:var(--fs-body);
-  line-height:1.55;
-  color:var(--gray);
+/* ── Дельти, бейджі, чипи ─────────────────────────────────── */
+.delta{display:inline-flex;align-items:center;gap:3px;font-size:var(--fs-xs);font-weight:600;border-radius:999px;padding:2px 8px;line-height:1.5;font-variant-numeric:tabular-nums}
+.delta.good{background:var(--good-t);color:var(--good)}
+.delta.bad{background:var(--bad-t);color:var(--bad)}
+.delta.flat{background:var(--cream-2);color:var(--gray)}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;letter-spacing:.02em;line-height:1.5;border-radius:999px;padding:2px 9px;background:var(--cream-2);color:var(--navy);white-space:nowrap}
+.badge.ok{background:var(--good-t);color:var(--good)}
+.badge.bad{background:var(--bad-t);color:var(--bad)}
+.badge.warn{background:var(--warn-t);color:var(--warn)}
+.badge.new{background:var(--yellow);color:var(--navy);border-radius:0}
+.badge.ps{background:var(--olive);color:#fff}
+.badge.dark{background:var(--navy);color:#fff}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;flex:0 0 auto}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font:inherit;font-size:var(--fs-sm);font-weight:500;line-height:1;
+  color:var(--navy);background:var(--white);border:1px solid var(--line-2);
+  border-radius:999px;padding:8px 13px;cursor:pointer;text-decoration:none;white-space:nowrap;
+  transition:background .16s var(--ease),border-color .16s var(--ease),color .16s var(--ease);
 }
-.cap b,.note b{color:var(--navy);font-weight:600}
-.ft,.ftr{margin-top:48px;padding-top:18px;border-top:1px solid var(--line-soft);text-align:center}
+.chip:hover{border-color:var(--gray-3);background:#FCFBF9}
+.chip.on,.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip .n{font-size:var(--fs-xs);color:var(--gray);font-variant-numeric:tabular-nums}
+.chip.on .n,.chip[aria-pressed="true"] .n{color:#C3C7D1}
+
+/* Вкладки (сегментований перемикач) */
+.tabs{display:inline-flex;gap:2px;background:var(--cream-2);border-radius:11px;padding:3px;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{font:inherit;font-size:var(--fs-sm);font-weight:500;color:var(--gray);background:none;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;white-space:nowrap;line-height:1.2;transition:background .16s var(--ease),color .16s var(--ease)}
+.tab:hover{color:var(--navy)}
+.tab[aria-selected="true"],.tab.on{background:var(--white);color:var(--navy);box-shadow:var(--sh-1)}
+.tabpanel[hidden]{display:none}
+
+/* Перемикач місяця у верхній смузі */
+.msel{position:relative;display:inline-flex}
+.msel select,select.ui{
+  appearance:none;-webkit-appearance:none;
+  font:inherit;font-size:var(--fs-sm);font-weight:600;line-height:1.2;
+  color:#fff;background:var(--navy);border:0;border-radius:10px;
+  padding:10px 36px 10px 14px;cursor:pointer;
+}
+.msel::after{content:"";position:absolute;right:14px;top:50%;width:7px;height:7px;margin-top:-6px;border-right:1.6px solid var(--yellow);border-bottom:1.6px solid var(--yellow);transform:rotate(45deg);pointer-events:none}
+.msel select:hover{background:var(--navy-2)}
+.msel.light select,select.ui.light{background:var(--white);color:var(--navy);box-shadow:inset 0 0 0 1px var(--line-2)}
+.msel.light::after{border-color:var(--gray)}
+
+.btn{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:var(--fs-sm);font-weight:600;line-height:1.2;border-radius:10px;padding:10px 14px;border:1px solid var(--line-2);background:var(--white);color:var(--navy);cursor:pointer;text-decoration:none}
+.btn:hover{background:#FCFBF9;border-color:var(--gray-3)}
+.btn.y{background:var(--yellow);border-color:var(--yellow);border-radius:0}
 
 /* ── Таблиці ──────────────────────────────────────────────── */
-table{font-size:var(--fs-xs);line-height:var(--lh-tight)}
-/* Шапки таблиць — Medium у другорядному тоні. Без капсу:
-   заголовки колонок українською часто довгі, капс на них не читається. */
-th{
-  font-size:var(--fs-xs);
-  font-weight:500;
-  letter-spacing:.02em;
-  text-transform:none;
-  color:var(--gray);
-  text-align:left;
-}
-td{font-variant-numeric:tabular-nums}
+.tblw{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:var(--r);background:var(--white);box-shadow:var(--sh-1)}
+table.tbl{border-collapse:separate;border-spacing:0;width:100%;font-size:var(--fs-sm);line-height:var(--lh-tight)}
+.tbl th{position:sticky;top:0;background:#FAF9F6;font-size:var(--fs-xs);font-weight:600;color:var(--gray);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr:hover td{background:#FCFBF8}
+.tbl .r,.tbl td.num{text-align:right}
+.tbl .c{text-align:center}
+.tbl tr.ps td{background:var(--olive-t)}
+.tbl tr.ps td:first-child{box-shadow:inset 3px 0 0 var(--olive)}
+.tbl .stick{position:sticky;left:0;background:inherit;z-index:1}
 
-/* ── Бейджі та чипи ───────────────────────────────────────── */
-.tag,.pill,.chip,.obadge,.flag,.fbtn .n{
-  font-size:var(--fs-xs);
-  font-weight:500;
-  letter-spacing:.04em;
-  line-height:1.4;
+/* ── Горизонтальні бари (CSS-графік) ──────────────────────── */
+.hb{display:flex;flex-direction:column;gap:9px}
+.hb-row{display:grid;grid-template-columns:minmax(110px,190px) minmax(0,1fr) 52px;gap:12px;align-items:center}
+.hb-l{font-size:var(--fs-sm);font-weight:500;line-height:1.25;text-align:right;overflow:hidden;text-overflow:ellipsis}
+.hb-t{height:22px;background:var(--cream);border-radius:5px;overflow:hidden}
+.hb-f{display:block;height:100%;width:var(--w,0%);background:var(--mkt);border-radius:5px;transform-origin:left;animation:hbgrow .7s var(--ease) both}
+.hb-f.ps{background:var(--olive)}
+.hb-f.hi{background:var(--yellow)}
+.hb-f.dk{background:var(--navy)}
+.hb-n{font-size:var(--fs-sm);font-weight:600;font-variant-numeric:tabular-nums}
+.hb-n small{font-weight:500;color:var(--gray);font-size:var(--fs-xs);margin-left:3px}
+@keyframes hbgrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (max-width:560px){.hb-row{grid-template-columns:96px minmax(0,1fr) 44px;gap:8px}.hb-l{font-size:var(--fs-xs)}}
+
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:var(--fs-xs);color:var(--gray);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--mkt)}
+
+/* Факт / гіпотеза */
+.fact,.hyp{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
+.fact{background:var(--good-t);color:var(--good)}
+.hyp{background:var(--warn-t);color:var(--warn)}
+
+.note,.muted{color:var(--gray);font-size:var(--fs-sm)}
+.src{color:var(--gray);font-size:var(--fs-xs);line-height:1.55;margin-top:12px}
+.empty{padding:28px;text-align:center;color:var(--gray);border:1px dashed var(--line-2);border-radius:var(--r);background:rgba(255,255,255,.5)}
+.pgft{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:var(--fs-xs);color:var(--gray);line-height:1.6}
+
+/* Анімація появи контенту при зміні вкладки/місяця — один рух на всю систему */
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.rise{animation:rise .32s var(--ease) both}
+
+/* ============================================================
+   Сумісність зі старими класами генераторів
+   (поступово замінюються компонентами вище)
+   ============================================================ */
+.hdr{display:none}                      /* старі шапки замінені каркасом ui.py */
+main.pg>h1.ptitle,.pg>.ptitle{display:none}  /* назва сторінки тепер у верхній смузі */
+.ptitle,main>h1,.page>h1,.lead h1{font-size:var(--fs-h1);font-weight:500;line-height:var(--lh-h1);letter-spacing:var(--tr-h1);margin:0 0 6px;text-wrap:balance}
+.band,h2.band,.band2,h2.band2,.band3,h2.band3{
+  font-size:var(--fs-h2);font-weight:500;line-height:var(--lh-head);letter-spacing:var(--tr-head);
+  color:var(--navy);display:flex;align-items:center;gap:10px;margin:52px 0 14px;padding:0;
 }
+.band small,h2.band small,.band2 small,.band3 small{font-size:var(--fs-sm);font-weight:400;letter-spacing:0;color:var(--gray)}
+.band .ic,h2.band .ic,.band2 .ic,.band3 .ic{display:none!important}
+.zcnt{font-size:var(--fs-xs);font-weight:500;color:var(--gray);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.card,.chart-card,.mc,.track{background:var(--white);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-1);min-width:0}
+.mc::before{display:none}
+.mc .mm::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lvl,var(--gray-soft));margin-right:7px;vertical-align:1px}
+.card h3,.chart-card h3,.card h4,.persona h3{font-size:var(--fs-h3);font-weight:500;line-height:var(--lh-head);letter-spacing:var(--tr-head);color:var(--navy);margin-bottom:3px}
+.chart-card .h-sub,.card .h-sub{font-size:var(--fs-sm);color:var(--gray);line-height:1.5;margin-bottom:12px}
+.kpi .val,.kpi .v,.k .v,.mc .mv,.tracker .big,.shelf .price,.big{font-size:var(--fs-num);font-weight:500;line-height:1.08;letter-spacing:var(--tr-num);font-variant-numeric:tabular-nums}
+.kpi .val small,.kpi .v small,.k .v small,.mc .mv span,.shelf .price small{font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--gray)}
+.kpi .lab,.k .l,.mc .mm{font-size:var(--fs-sm);font-weight:500;color:var(--gray);line-height:1.35}
+.kpi .l{font-size:var(--fs-sm);color:var(--gray);line-height:1.45}
+.kpi .sub,.mc li,.fs-h,.flegend{font-size:var(--fs-sm);color:var(--gray)}
+.cap,.note-sm,.provn,.ft,.ftr{font-size:var(--fs-sm);line-height:1.55;color:var(--gray)}
+.cap b,.note b{color:var(--navy);font-weight:600}
+.ft,.ftr{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);text-align:left}
+table{font-size:var(--fs-sm);line-height:var(--lh-tight)}
+th{font-size:var(--fs-xs);font-weight:600;color:var(--gray);text-align:left}
+.tag,.pill,.flag,.obadge{font-size:var(--fs-xs);font-weight:500;line-height:1.4}
 .tag,.pill{border-radius:999px;padding:3px 10px}
-
-/* ── Темні панелі: світлий текст потребує компенсації ─────── */
-.ins,.utp{
-  background:var(--navy);
-  border-radius:var(--r);
-}
-.ins li,.utp .big,.ins .t{letter-spacing:.004em}
+.ins,.utp{background:var(--navy);border-radius:var(--r)}
 .ins li{font-size:var(--fs-body);line-height:1.55}
-.ins .t{
-  font-size:var(--fs-xs);
-  font-weight:500;
-  letter-spacing:var(--tr-caps);
-  text-transform:uppercase;
-  color:var(--yellow);
-}
+.ins .t{font-size:var(--fs-xs);font-weight:600;letter-spacing:var(--tr-caps);text-transform:uppercase;color:var(--yellow)}
 .utp .big{font-size:var(--fs-h2);font-weight:500;line-height:var(--lh-head);letter-spacing:var(--tr-head)}
-
-/* ── Звіт CEO: сторінка-документ ──────────────────────────── */
 .page{background:var(--white)}
-.page h2{
-  font-size:var(--fs-h2);
-  font-weight:500;
-  letter-spacing:var(--tr-head);
-  line-height:var(--lh-head);
-  border-bottom:0;
-  padding-bottom:0;
-  margin:44px 0 12px;
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-.page h2::before{content:"";flex:0 0 auto;width:24px;height:1px;background:var(--olive)}
+.page h2{font-size:var(--fs-h2);font-weight:500;letter-spacing:var(--tr-head);line-height:var(--lh-head);margin:44px 0 12px}
 .page h3{font-size:var(--fs-h3);font-weight:500;letter-spacing:var(--tr-head)}
 
-/* ── Друк ─────────────────────────────────────────────────── */
+/* ── Друк: без меню і верхньої смуги ──────────────────────── */
 @media print{
-  .hdr,.bar,.hnav,.xnav{position:static;background:#fff}
+  .side,.top .top-r,.burger,.scrim,.skip{display:none!important}
+  .app{display:block}
+  .top{position:static;background:#fff;border:0;padding:0 0 12px}
   body{background:#fff}
-  .card,.chart-card,.kpi,.mc{box-shadow:none}
+  .panel,.card,.kpi,.tk,.tblw{box-shadow:none}
+  .pg{padding:0;max-width:none}
 }
